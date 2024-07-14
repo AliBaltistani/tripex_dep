@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpoffice/phpexcel": "^1.8",
+        "phpoffice/phpspreadsheet": "^1.29",
+        "dompdf/dompdf": "^2.0",
+        "twilio/sdk": "^7.16"
+    }
+}
