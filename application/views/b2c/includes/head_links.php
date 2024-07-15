@@ -23,3 +23,5 @@
 <link href="<?=base_url()?>assets/css/nice-select.css" rel="stylesheet">
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/style.css">
+
+<link rel="stylesheet" href="<?= base_url('assets/css/niceCountryInput.css') ?>">

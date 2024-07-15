@@ -164,6 +164,8 @@
 <script src="<?= base_url() ?>assets/js/jquery.fancybox.min.js"></script>
 
 <script src="<?= base_url() ?>assets/js/custom.js"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<script src="<?= base_url() ?>assets/js/niceCountryInput.js"></script>
 </body>
 
 <!-- Mirrored from demo-egenslab.b-cdn.net/html/triprex/preview/index5# by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 17 Feb 2024 13:29:45 GMT -->

@@ -201,18 +201,16 @@ if (!function_exists('getDiscount')) {
 		$price_model = new Prices_model();
 		$priceData = $price_model->getWhere(['role_id' => $role_id, 'status' => ACTIVE])[0] ?? array();
 		if (!empty($priceData)) {
-
-			if($inPercent == TRUE){
-				if (!empty($priceData)) {
-								$discount =  (int) $priceData->discount_percentage;
-								$discount_amount = (int) ((($discount) * ((int) $price_oginal)) / 100);
-								return $price_oginal - $discount_amount;
-							}
+            $inPercent = ($priceData->discount_type == 'percentage') ? true: false; 
+			
+            if($inPercent == TRUE){
+                $discount =  (int) $priceData->discount_amount;
+                $d_amount = (int) (($discount * ((int) $price_oginal)) / 100);
+                return $price_oginal - $d_amount;
+				
 			}else{
-				if (!empty($priceData)) {
-					$discount =  (int) $priceData->discount_percentage;
-					return (($price_oginal) + ($discount));
-				}
+                $discount =  (int) $priceData->discount_amount;
+                return $price_oginal + $discount;
 			}
 
 		}
@@ -222,27 +220,23 @@ if (!function_exists('getDiscount')) {
 }
 
 if (!function_exists('checkDiscount')) {
-	function checkDiscount($price_oginal = 0, $inPercent = FALSE)
+	function checkDiscount($price_oginal = 0, $inPercent = false)
 	{
 		$user_role_id  =  (!empty($_SESSION['role'])) ? $_SESSION['role'] : 25;
 		if ($user_role_id) {
 			$price_model = new Prices_model();
 			$priceData = $price_model->getWhere(['role_id' => $user_role_id, 'status' => ACTIVE])[0] ?? array();
-			
-				if($inPercent == TRUE){
-					if (!empty($priceData)) {
-									$discount =  (int) $priceData->discount_percentage;
-									$discount_amount = (int) ((($discount) * ((int) $price_oginal)) / 100);
-									return $price_oginal - $discount_amount;
-								}
+            if (!empty($priceData)) {
+                $inPercent = ($priceData->discount_type == 'percentage') ? true: false; 
+				if($inPercent == true){
+                    $discount =  (int) $priceData->discount_amount;
+                    $d_amount = (int) (($discount * ((int) $price_oginal)) / 100);
+                    return $price_oginal + $d_amount;
 				}else{
-					if (!empty($priceData)) {
-						$discount =  (int) $priceData->discount_percentage;
-						return (( (int) $price_oginal) + ( (int) $discount));
-					}
-			  }
-			
-			
+                    $discount =  (int) $priceData->discount_amount;
+                    return (( (int) $price_oginal) + ( (int) $discount));
+			    }
+            }
 		}
 
 		return $price_oginal;
@@ -258,7 +252,7 @@ if (!function_exists('getPercentage')) {
 			$price_model = new Prices_model();
 			$priceData = $price_model->getWhere(['role_id' => $user_role_id, 'status' => ACTIVE])[0] ?? array();
 			if (!empty($priceData)) {
-				$discount =  (int) $priceData->discount_percentage;
+				$discount =  (int) $priceData->discount_amount;
 			}
 		}
 
@@ -308,12 +302,9 @@ if (!function_exists('priceCalculator')) {
 						$arr['childOriginal'] =  ( int ) $serviceInfo['priceChild'];
 						if($serviceInfo['priceChild'] == '' || $serviceInfo['priceChild'] == '0' ||$serviceInfo['priceChild'] == '00' || $serviceInfo['priceChild'] == '0.00'){
 						    $arr['childDiscount'] = $serviceInfo['priceChild'];
-						}else{
-						    
-						$arr['childDiscount'] = checkDiscount( ( int ) $serviceInfo['priceChild']);
+						}else{   
+					     $arr['childDiscount'] = checkDiscount( ( int ) $serviceInfo['priceChild']);
 						}
-				// 		$arr['childDiscount'] = checkDiscount( ( int ) $serviceInfo['priceChild']);
-						
 					}
 
 					if (array_key_exists('priceAdult', $serviceInfo)) {
@@ -326,8 +317,6 @@ if (!function_exists('priceCalculator')) {
 						    
 						$arr['adultDiscount'] = checkDiscount( ( int ) $serviceInfo['priceAdult']);
 						}
-						
-				// 		$arr['adultDiscount'] =   checkDiscount( (int) $serviceInfo['priceAdult']);
 					}
 
 					$arr['totalOriginal'] = (int) $serviceInfo['priceChild'] + (int) $serviceInfo['priceAdult'];
@@ -343,19 +332,19 @@ if (!function_exists('priceCalculator')) {
 					$countDisChGrOrg = ($arr['childDiscount'] >= $arr['childOriginal']) ?  $arr['childDiscount']  : $arr['childOriginal'];
 
 					$htmlAdult = ($arr['childOriginal'] != '0.00') ?
-						'<div class="col-6"><strong style="font-size: 1em;" >ADULT <i><small>(AED)</small></i>:</strong> <br>' . $disAdGrOrg . '</div>'
+						(String) '<div class="col-6"><strong style="font-size: 1em;" >ADULT <i><small>(AED)</small></i>:</strong> <br>' . $disAdGrOrg . '</div>'
 						:
-						'<div class="col-6"><strong style="font-size: 1em;" >PRICE: <i><small>(AED)</small></i>:</strong> <br>' . $disAdGrOrg . '</div>';
+						 (String) '<div class="col-6"><strong style="font-size: 1em;" >PRICE: <i><small>(AED)</small></i>:</strong> <br>' . $disAdGrOrg . '</div>';
 				
 
 					$htmlChild = (!empty($arr['childOriginal']) && $arr['childOriginal'] != '0.00') ?
-					'<div class="col-6"><strong style="font-size: 1em;" >CHILD <i><small>(AED)</small></i>: </strong> <br>' . $disChGrOrg . ' </div>'
+					 (String) '<div class="col-6"><strong style="font-size: 1em;" >CHILD <i><small>(AED)</small></i>: </strong> <br>' . $disChGrOrg . ' </div>'
 						: '';
 
-					$arr['pricehtml'] = '<div class="row" >' . $htmlAdult . $htmlChild  . '</div>';
+					$arr['pricehtml'] = (String) '<div class="row" >' . $htmlAdult . $htmlChild  . '</div>';
 					$arr['priceCountAdult'] =  (int) $arr['adultDiscount'];
 					$arr['priceCountChild'] =  (int) $arr['childDiscount'];
-					$arr['priceCountTotal'] =   ( (int) $countDisAdGrOrg  +  (int) $countDisChGrOrg );
+					$arr['priceCountTotal'] =    (int) $countDisAdGrOrg  +  (int) $countDisChGrOrg ;
 
 				}
 			}

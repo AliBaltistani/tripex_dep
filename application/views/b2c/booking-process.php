@@ -268,7 +268,9 @@
 								<a data-fancybox="gallery-01" href="<?= base_url($sTumbnail); ?>"><i class="bi bi-eye"></i></a>
 							</div>
 						</div>
-						<?php if (!empty($imgArray)) { ?>
+						<?php 
+						// echo '<pre>'; print_r($imgArray);die;
+						 if (!empty($imgArray)) { ?>
 							<div class="col-lg-6 h-100">
 								<div class="row g-3 h-100">
 									<?php if (!empty($imgArray)) {

@@ -1707,12 +1707,23 @@ pre {
             </div>
             <div class="form-inner mb-20">
                 <label>Phone Number <span>*</span></label>
-                <!--phone number with country code-->
-                <br /> 
-                <input id="phone" class="form-control" type="tel"  name="customer_number_invalid"  value="<?= set_value('customer_number'); ?>" >
-                <br />
+                <div class="select-box">
+                    <div class="selected-option">
+                        <div>
+                            <span class="iconify" data-icon="flag:ae-4x3"></span>
+                            <strong>+971</strong>
+                        </div>
+                        <input type="tel" name="customer_number" value="<?= (set_value('customer_number'))?set_value('customer_number'):'+971'; ?>" placeholder="Phone Number">
+                    </div>
+                    <div class="options" style="z-index: 1;">
+                        <input type="text" class="search-box" placeholder="Search Country Name">
+                        <ol>
+
+                        </ol>
+                    </div>
+                </div>
                  <small><span id="valid-msg" class="hide" ></span>
-  <span id="error-msg" class="hide" style="color: #dc3545;text-align: justify;font-family: var(--font-jost);font-size: 12px;font-weight: 300;line-height: 32px;"><b>Invalid!</b> Please enter a valid phone number </span></small>
+                  <span id="error-msg" class="hide" style="color: #dc3545;text-align: justify;font-family: var(--font-jost);font-size: 12px;font-weight: 300;line-height: 32px;"><b>Invalid!</b> Please enter a valid phone number </span></small>
                 <?= '<small>' . $this->form_validation->error('customer_number') . '</small>' ?>
             </div>
         </div>
@@ -1831,7 +1842,7 @@ pre {
                     <input type="hidden" name="price_child" id="" value="<?= $pChild; ?>">
                     <input type="hidden" name="price_adult" id="" value="<?= $pAdult; ?>">
                     <input type="hidden" name="slot_no" id="slot_no" value="NULL">
-                    <input type="hidden" name="customer_number" id="customer_number_valid" value="<?= set_value('customer_number'); ?>" required>
+                    <!-- <input type="hidden" name="customer_number" id="customer_number_valid" value="" required> -->
 
                     <div class="total-price"><span>Total Price:</span><strong id="totalPrice">0.00 <small>AED</small></strong></div>
                     <?= '<small>' . $this->form_validation->error('totalPrice_hidden') . '</small>' ?>
@@ -1902,7 +1913,7 @@ telInput.blur(function() {
       $('#btnSubmit').removeAttr('disabled');
       $('#btnSubmit').removeClass('btn');
       $('#btnSubmit').removeClass('btn-secondary');
-      set_valid_num();
+      // set_valid_num();
     } else {
       telInput.addClass("error");
       errorMsg.removeClass("hide");
