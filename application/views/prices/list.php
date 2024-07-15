@@ -59,7 +59,7 @@
                     <tr>
                         <th>Sr.no</th>
                         <th>Role</th>
-                        <th>Charges (AED)</th>
+                        <th>Charges</th>
                         <th>Status</th>
                         <th>Created On</th>
                         <th class="text-center">Actions</th>
@@ -75,7 +75,7 @@
                         
                         <td width="5px"><?php echo $sr++ ?></td>
                         <td><?= (!empty($record->role_now))?$record->role_now->role: 'unknown' ?></td>
-                        <td><?php echo $record->discount_percentage ?> (AED)</td>
+                        <td><?php echo $record->discount_amount ?> (<?= ($record->discount_type == "fixed")? 'AED': '%' ; ?>)</td>
                         <td>
                             <?php 
                             if($record->status == ACTIVE) {

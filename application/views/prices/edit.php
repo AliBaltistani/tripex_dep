@@ -40,8 +40,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="discount_percentage">Charges (Fixed Price AED)</label>
-                                        <input type="number" class="form-control required" placeholder="Enter Discount Percentage (%)" value="<?= $prices->discount_percentage ?>" id="discount_percentage" name="discount_percentage" />
+                                        <label for="discount_amount">Charges In (% OR AED)</label>
+                                        <input type="number" class="form-control required" placeholder="Enter Discount Amount (% or AED)" value="<?= $prices->discount_amount ?>" id="discount_amount" name="discount_amount" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -53,6 +53,16 @@
                                             <option value="<?= INACTIVE ?>" <?= ($prices->status == INACTIVE)? 'selected': '' ?>>Inactive</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="discount_type">Charges Type</label>
+                                    <div class="form-group">
+                                        <input type="radio" class=" required" name="discount_type" id="discount_type" value="percentage" checked>
+                                        <label for="tax_type1" > Count as Percentage</label> 
+                                        &nbsp; &nbsp; &nbsp;
+                                        <input type="radio" class="required" name="discount_type" id="discount_type" value="fixed">
+                                        <label for="tax_type2" >Count as AED</label>
+                                   </div>
                                 </div>
                             </div>
                         </div><!-- /.box-body -->

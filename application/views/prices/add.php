@@ -39,8 +39,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="discount_percentage">Chrages (Fixed Price AED)</label>
-                                        <input type="number" class="form-control required" placeholder="Enter Discount Percentage (%)" value="" id="discount_percentage" name="discount_percentage" />
+                                        <label for="discount_amount">Chrages (% or AED)</label>
+                                        <input type="number" class="form-control required" placeholder="Enter Discount Amount (% or AED)" value="" id="discount_amount" name="discount_amount" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -52,6 +52,16 @@
                                             <option value="<?= INACTIVE ?>">Inactive</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="status">Charges Type</label>
+                                    <div class="form-group">
+                                        <input type="radio" class=" required" name="discount_type" id="c_type" value="percentage" checked>
+                                        <label for="tax_type1" > Count as Percentage</label> 
+                                        &nbsp; &nbsp; &nbsp;
+                                        <input type="radio" class="required" name="discount_type" id="c_type" value="fixed">
+                                        <label for="tax_type2" >Count as AED</label>
+                                   </div>
                                 </div>
                             </div>
                         </div><!-- /.box-body -->
