@@ -47,7 +47,7 @@ class Category extends BaseController
         {        
             $searchText = '';
             if(!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
+                $searchText = $this->security->($this->input->post('searchText'));
             }
             $data['searchText'] = $searchText;
             
@@ -108,10 +108,10 @@ class Category extends BaseController
             else
             {
               
-                $categoryTitle = $this->security->xss_clean($this->input->post('categoryTitle'));
-                $description = $this->security->xss_clean($this->input->post('description'));
-                $cLabel = $this->security->xss_clean($this->input->post('cLabel'));
-                $status = $this->security->xss_clean($this->input->post('statuss'));
+                $categoryTitle = $this->security->($this->input->post('categoryTitle'));
+                $description = $this->security->($this->input->post('description'));
+                $cLabel = $this->security->($this->input->post('cLabel'));
+                $status = $this->security->($this->input->post('statuss'));
                 
                  $image = $this->do_upload($categoryTitle);
                  if($image == "error")
@@ -187,11 +187,11 @@ class Category extends BaseController
             if($this->form_validation->run() == FALSE){ $this->edit($categoryId);}
             else
             {
-                $categoryTitle = $this->security->xss_clean($this->input->post('categoryName'));
-                $description = $this->security->xss_clean($this->input->post('description'));
-                $status = $this->security->xss_clean($this->input->post('status'));
+                $categoryTitle = $this->security->($this->input->post('categoryName'));
+                $description = $this->security->($this->input->post('description'));
+                $status = $this->security->($this->input->post('status'));
                 $categoryImage = ($_FILES['categoryImage']['name'])?$_FILES['categoryImage']['name']:'';
-                $cLabel = $this->security->xss_clean($this->input->post('cLabel'));
+                $cLabel = $this->security->($this->input->post('cLabel'));
                 
                 $categoryInfo = array('categoryName'=>$categoryTitle, 'description'=>$description, 'categoryLabel'=>$cLabel, 'isPublished'=>$status, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
 
@@ -279,7 +279,7 @@ class Category extends BaseController
     } else {
       $searchText = '';
       if (!empty($this->input->post('searchText'))) {
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        $searchText = $this->security->($this->input->post('searchText'));
       }
 
       $serviceType = '';
