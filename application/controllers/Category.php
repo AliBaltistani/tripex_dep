@@ -122,7 +122,7 @@ class Category extends BaseController
                     $categoryInfo = array('categoryName'=>$categoryTitle, 
                     'description'=>$description,
                     'categoryImage' =>$image,
-                    'isPublished' => $status,  
+                    'isPublished' => $status ?? 0,  
                     'categoryLabel' =>$cLabel, 
                     'createdBy'=>$this->vendorId,
                     'createdDtm'=>date('Y-m-d H:i:s')
@@ -193,7 +193,7 @@ class Category extends BaseController
                 $categoryImage = ($_FILES['categoryImage']['name'])?$_FILES['categoryImage']['name']:'';
                 $cLabel = ($this->input->post('cLabel'));
                 
-                $categoryInfo = array('categoryName'=>$categoryTitle, 'description'=>$description, 'categoryLabel'=>$cLabel, 'isPublished'=>$status, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+                $categoryInfo = array('categoryName'=>$categoryTitle, 'description'=>$description, 'categoryLabel'=>$cLabel, 'isPublished'=>$status ?? 0, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
 
                 if($categoryImage){
                     $image = $this->do_upload($categoryTitle);
