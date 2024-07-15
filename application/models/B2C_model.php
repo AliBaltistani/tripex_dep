@@ -22,8 +22,18 @@ class B2C_model extends CI_Model
         $this->db->from('tbl_services');
          $this->db->where('isDeleted', 0);
         $this->db->where('status', ACTIVE);
-        $this->db->order_by('popularity', 'desc');
+        $this->db->order_by('popularity', 'asc');
         $this->db->limit(20);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_where($where) {
+        $this->db->select('*');
+        $this->db->from('tbl_services');
+         $this->db->where('isDeleted', 0);
+        $this->db->where('status', ACTIVE);
+        $this->db->where($where);
         $query = $this->db->get();
         return $query->result();
     }

@@ -33,18 +33,41 @@ class B2C extends BaseControllerFrontend
     {
       $data['records'] = $this->b2c->getCategory();
       $data['popular_tours'] = $this->b2c->get_popular_services();
-      
-    //   pre($data['popular_tours'][0]->extraInfo);
-    //   die;
-      
+     
+      foreach($data['records'] as $single){
+        $cName = str_replace(' ','',($single->categoryName ?? ''));
+        if("TopSellingTours" == $cName){
+           $arr = $this->b2c->get_where(['categoryId' => $single->categoryId ?? '']);
+           if($arr){
+            foreach($arr as $ar){
+              array_push($data['popular_tours'],$ar);
+            }
+           }
+        }
+      }
+      $data['popular_tours'] =  array_reverse($data['popular_tours']);
+       
       $this->global['pageTitle'] = WEB_NAME;
       $this->loadViews("b2c/index", $this->global, $data, NULL);
     }
      public function home()
     {
       $data['records'] = $this->b2c->getCategory();
+     
       $data['popular_tours'] = $this->b2c->get_popular_services();
       
+      foreach($data['records'] as $single){
+        $cName = str_replace(' ','',($single->categoryName ?? ''));
+        if("TopSellingTours" == $cName){
+           $arr = $this->b2c->get_where(['categoryId' => $single->categoryId ?? '']);
+           if($arr){
+            foreach($arr as $ar){
+              array_push($data['popular_tours'],$ar);
+            }
+           }
+        }
+      }
+      $data['popular_tours'] =  array_reverse($data['popular_tours']);
     //   pre($data['popular_tours'][0]->extraInfo);
     //   die;
       
