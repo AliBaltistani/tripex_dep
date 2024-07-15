@@ -54,7 +54,7 @@ class SubCategory extends BaseController
         } else {
             $searchText = '';
             if (!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
+                $searchText = ($this->input->post('searchText'));
             }
             $data['searchText'] = $searchText;
 
@@ -91,7 +91,7 @@ class SubCategory extends BaseController
 
             $searchText = '';
             if (!empty($this->input->post('searchText'))) {
-                $searchText = $this->security->xss_clean($this->input->post('searchText'));
+                $searchText = ($this->input->post('searchText'));
             }
             $data['searchText'] = $searchText;
 
@@ -165,13 +165,13 @@ class SubCategory extends BaseController
                 $this->add();
             } else {
 
-                $categoryTitle = $this->security->xss_clean($this->input->post('categoryTitle'));
-                $description = $this->security->xss_clean($this->input->post('description'));
-                $maincatid = $this->security->xss_clean($this->input->post('maincatid'));
-                $status = $this->security->xss_clean($this->input->post('status'));
-                $passengers = $this->security->xss_clean($this->input->post('passengers'));
-                $baby_seats = $this->security->xss_clean($this->input->post('baby_seats'));
-                $luggage = $this->security->xss_clean($this->input->post('luggage'));
+                $categoryTitle = ($this->input->post('categoryTitle'));
+                $description = ($this->input->post('description'));
+                $maincatid = ($this->input->post('maincatid'));
+                $status = ($this->input->post('status'));
+                $passengers = ($this->input->post('passengers'));
+                $baby_seats = ($this->input->post('baby_seats'));
+                $luggage = ($this->input->post('luggage'));
                 if ($luggage == ""  || $luggage == "0") {
                     $luggage == "00";
                 }
@@ -275,13 +275,13 @@ class SubCategory extends BaseController
         } else {
             $categoryId = $this->input->post('categoryId');
 
-            $categoryTitle = $this->security->xss_clean($this->input->post('categoryTitle'));
-            $description = $this->security->xss_clean($this->input->post('description'));
-            $maincatid = $this->security->xss_clean($this->input->post('maincatid'));
-            $status = $this->security->xss_clean($this->input->post('status'));
-            $passengers = $this->security->xss_clean($this->input->post('passengers'));
-            $baby_seats = $this->security->xss_clean($this->input->post('baby_seats'));
-            $luggage = $this->security->xss_clean($this->input->post('luggage')); {
+            $categoryTitle = ($this->input->post('categoryTitle'));
+            $description = ($this->input->post('description'));
+            $maincatid = ($this->input->post('maincatid'));
+            $status = ($this->input->post('status'));
+            $passengers = ($this->input->post('passengers'));
+            $baby_seats = ($this->input->post('baby_seats'));
+            $luggage = ($this->input->post('luggage')); {
                 $luggage == "00";
             }
             if ($passengers == ""  || $passengers == "0") {
