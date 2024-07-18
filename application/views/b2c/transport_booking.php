@@ -1837,10 +1837,10 @@
                   </h2>
                   <div id="collapseBsOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionBabySeat">
                     <div class="accordion-body">
-                      <?php if($babySeatOp){ 
+                      <?php if($babySeatOp->bsLabel[0]){ 
                         $bsLen = count($babySeatOp->bsLabel);
                         $specialChar = array('`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', ';', ':', '"', "'", ',', '.', '<', '>', '/', '?', '|', '\\', " ");
-
+                        
                         for($i = 0; $i < $bsLen; $i++) { 
                         
                           $fl_babySeat = str_replace($specialChar ,'_' ,strtolower($babySeatOp->bsLabel[$i]));
@@ -1856,9 +1856,23 @@
                                 <!--  'bs_qty_'.$fl_babySeat  -->
                                 <a href="javascript:void(0);" id="<?= 'quantity_plus_babySeat'.$i ?>" onclick="add_baby_seat_price(this)" data-price="<?= $babySeatOp->bsPrice[$i] ?? '0'; ?>" data-input="<?= 'quantity_input_babySeat_'.$i ?>" class="quantity__plus_disabled"><i class="bi bi-plus"></i></a>
                               </div>
-                              <?= '<small>' . $this->form_validation->error('quantity_input_adult') . '</small>' ?>
+                          
                             </div>
-                      <?php } } ?>
+                      <?php } } else { ?>
+                      <div class="number-input-item adults">
+                            <small style="line-height: normal;" ><strong>Baby Seat </strong> 
+                            <br> <small style="color: #aaa;"></small> 
+                            </small>
+                              </span><small> 25 AED</small></span>
+                            <div class="quantity-counter" style="width: 100px;" >
+                              <a href="javascript:void(0);" id="<?= 'quantity_minus_babySeat0' ?>" onclick="sub_baby_seat_price(this)" data-price="25" data-input="<?= 'quantity_input_babySeat_0'?>" class="quantity__minus_disabled"><i class="bi bi-dash"></i></a>
+                              <input type="text" name="babySeat_qty[baby_seat]" style="padding: 0;" id="<?= 'quantity_input_babySeat_0' ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
+                              <!--  'bs_qty_'.$fl_babySeat  -->
+                              <a href="javascript:void(0);" id="<?= 'quantity_plus_babySeat0' ?>" onclick="add_baby_seat_price(this)" data-price="25" data-input="<?= 'quantity_input_babySeat_0' ?>" class="quantity__plus_disabled"><i class="bi bi-plus"></i></a>
+                            </div>
+                            
+                          </div>
+                          <?php } ?> 
                     </div>
                   </div>
                 </div>
