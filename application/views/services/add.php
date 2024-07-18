@@ -1,3 +1,4 @@
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -58,15 +59,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="hidden" name="serviceLabel" value="<?= strtolower($categoryInfo->categoryLabel); ?>" required>
-                                    <label for="title">Services Title *</label>
+                                    <label for="title">Services Title <span style="color: red;">*</span></label>
                                     <input type="text" class="form-control required" value="<?php echo set_value('title'); ?>" id="title" name="title" maxlength="256" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="role">Status</label>
+                                    <label for="role">Status <span style="color: red;">*</span></label>
                                     <select class="form-control required" id="status" name="status" required>
-                                        <option value="">Select Status</option>
+                                        <option value="">Select Status </option>
                                         <option value="<?= ACTIVE ?>" <?php if (set_value('status') == ACTIVE) {
                                                                             echo "selected=selected";
                                                                         } ?>>Publish</option>
@@ -79,9 +80,9 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="role">Select <?= ucfirst($categoryInfo->categoryLabel); ?></label>
+                                    <label for="role">Select <?= ucfirst($categoryInfo->categoryLabel); ?> <span style="color: red;">*</span></label>
                                     <select class="form-control required" id="subcatId" name="subcatId" required>
-                                        <option value="">Select Category</option>
+                                        <option value="">Select Category  </option>
                                         <?php foreach ($subcategoryInfo as $single) {  ?>
                                             <option value="<?= $single->subcatId; ?>" <?php if ($single->subcatId == set_value('subcatId')) {
                                                                                             echo "selected=selected";
@@ -90,40 +91,43 @@
                                     </select>
                                 </div>
                             </div>
-                            <?php if ($categoryInfo->categoryLabel == "attraction") { include('add-attraction.php'); }
-                                  else if ($categoryInfo->categoryLabel == TRANSPORT) { include('add-transport.php'); }
-                              ?>
+                            <?php if ($categoryInfo->categoryLabel == "attraction") {
+                                include 'add-attraction.php';
+                                } else if ($categoryInfo->categoryLabel == TRANSPORT) {
+                                    include 'add-transport.php';
+                                }
+                            ?>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="description">Overview *</label>
+                                    <label for="description">Overview <span style="color: red;">*</span></label>
                                     <textarea class="form-control required" id="description" name="description"><?php echo set_value('description'); ?></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Inclusion">Inclusion *</label>
+                                    <label for="Inclusion">Inclusion <span style="color: red;">*</span></label>
                                     <textarea class="form-control required" id="Inclusion" name="inclusion"><?php echo set_value('inclusion'); ?></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Exclusion">Exclusion *</label>
+                                    <label for="Exclusion">Exclusion <span style="color: red;">*</span></label>
                                     <textarea class="form-control required" id="Exclusion" name="exclusion"><?php echo set_value('exclusion'); ?></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="terms">Terms & Services *</label>
+                                    <label for="terms">Terms & Services <span style="color: red;">*</span></label>
                                     <textarea class="form-control required" id="terms" name="terms"><?php echo set_value('terms'); ?></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="thumbnailImage">Thumbnail *</label>
+                                    <label for="thumbnailImage">Thumbnail <span style="color: red;">*</span></label>
                                     <input type="file" name="thumbnailImage" id="thumbnailImage" size="20" accept="image/*" />
                                 </div>
                             </div>
@@ -133,7 +137,45 @@
                                     <input type="file" name="serviceImage[]" id="serviceImage" size="20" multiple accept="image/*" />
                                 </div>
                             </div>
+                            <?php  
+                            // $tooltip = "Note: The Individual Option means a discount will be applied to each child's and each adult's price separately.If Total Option is selected means a the discount amount will be applied to the total sum of all prices (child and adult)." ?>
+                            <!-- <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="discount_as" class="bg-dark" tabindex="0" data-toggle="tooltip" title="<?= $tooltip ?>"> <i class="fa fa-question text-primary"></i> Apply Discount As: </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discount_as" value="total" id="discount_as" checked>
+                                        <label class="form-check-label" for="discount_as" style="font-weight: 500;" >
+                                            Total Price  (Child + Adult )
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discount_as" value="ind" id="discount_as2" >
+                                        <label class="form-check-label" for="discount_as2" style="font-weight: 500;" >
+                                        Individual Prices (Child & Adult )
+                                        </label>
+                                    </div>      
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="apply_tax">Tax Apply</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="apply_tax" value="1" id="apply_tax" style="font-weight: 500;" checked>
+                                        <label class="form-check-label" for="apply_tax1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="apply_tax" value="0" id="apply_tax2"  style="font-weight: 500;">
+                                        <label class="form-check-label" for="apply_tax2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> -->
+
                         </div>
+
                     </div><!-- /.box-body -->
 
                     <div class="box-footer">
@@ -155,42 +197,43 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">ADD Services</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form name="add_slots" id="add_slots">
-            <div class="modal-body">
-                <!-- Multiple slots -->
-                
+                <div class="modal-body">
+                    <!-- Multiple slots -->
+
                     <table class="table table-bordered table-hover" id="dynamic_field">
                         <tr>
-                            <td><input type="text" name="name[]"  placeholder="Enter Slot Name i.e S1" class="form-control name_list" /></td>
-                            <td><input type="number" name="amount[]"  placeholder="Enter Slot Price i.e 120 " class="form-control total_amount" /></td>
+                            <td><input type="text" name="name[]" placeholder="Enter Slot Name i.e S1" class="form-control name_list" /></td>
+                            <td><input type="number" name="amount[]" placeholder="Enter Slot Price i.e 120 " class="form-control total_amount" /></td>
                             <td><button type="button" name="add" id="add" class="btn btn-primary">Add More</button></td>
                         </tr>
-                        <?php if($this->session->userdata('slot_data')){
-                              $slot_data = $this->session->userdata('slot_data');
-                              $i = 1;
-                              
-                              foreach($slot_data as $KEY => $slot){
-                            ?>
-                        <tr id="row<?= $i; ?>">
-                            <td><input type="text" name="name[]" value="<?= $KEY ?>" placeholder="Enter Slot Name" class="form-control name_list"/></td>
-                            <td><input type="number" name="amount[]" value="<?= $slot ?>" placeholder="Enter Slot Price" class="form-control total_amount"/></td>
-                            <td><button type="button" name="remove" id="<?= $i; ?>" class="btn btn-danger btn_remove">X</button></td>
-                        </tr>
-                        <?php } } ?>
+                        <?php if ($this->session->userdata('slot_data')) {
+                            $slot_data = $this->session->userdata('slot_data');
+                            $i = 1;
+
+                            foreach ($slot_data as $KEY => $slot) {
+                        ?>
+                                <tr id="row<?= $i; ?>">
+                                    <td><input type="text" name="name[]" value="<?= $KEY ?>" placeholder="Enter Slot Name" class="form-control name_list" /></td>
+                                    <td><input type="number" name="amount[]" value="<?= $slot ?>" placeholder="Enter Slot Price" class="form-control total_amount" /></td>
+                                    <td><button type="button" name="remove" id="<?= $i; ?>" class="btn btn-danger btn_remove">X</button></td>
+                                </tr>
+                        <?php }
+                        } ?>
                     </table>
                     <!-- <input type="submit" class="btn btn-success" name="submit" id="submit" value="Submit"> -->
-                
-                <!-- End Multiple slots -->
-            </div>
-            <div class="modal-footer">
-                
-                <button type="submit" name="submit" id="submit"  class="btn btn-success">Save changes</button>
-            </div>
+
+                    <!-- End Multiple slots -->
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" name="submit" id="submit" class="btn btn-success">Save changes</button>
+                </div>
             </form>
         </div>
     </div>
@@ -198,15 +241,15 @@
 
 <script src="<?= base_url() ?>assets/admin/js/common.js"></script>
 <script>
-    function togglePriceLabelA(){
-       $('#priceAdultLabel').prop('disabled', (i, v) => !v);
-       $('#priceAdultLabel').focus();
+    function togglePriceLabelA() {
+        $('#priceAdultLabel').prop('disabled', (i, v) => !v);
+        $('#priceAdultLabel').focus();
     }
-    function togglePriceLabelC(){
-       $('#priceChildLabel').prop('disabled', (i, v) => !v);
-       $('#priceChildLabel').focus();
+
+    function togglePriceLabelC() {
+        $('#priceChildLabel').prop('disabled', (i, v) => !v);
+        $('#priceChildLabel').focus();
     }
-    
 </script>
 <script>
     $(document).ready(function() {
@@ -260,7 +303,7 @@
             addamount += 0;
             console.log('amount: ' + addamount);
             i++;
-            $('#dynamic_field').append('<tr id="row' + i + '"><td><input type="text" name="name[]" placeholder="Enter Slot Name" class="form-control name_list"/></td><td><input type="number" name="amount[]" value="0" placeholder="Enter Slot Price" class="form-control total_amount"/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+            $('#dynamic_field').append('<tr id="row' + i + '"><td><div class="input-group"><span class="input-group-addon" style="background: #f6f6f6 !important;"> <i class="fa fa-pencil" ></i>&nbsp<input type="text" id="bsLabel' + i + '" name="bsLabel[]" placeholder="e.g Child Seat"   value=""  style="max-width: 100px;border: none;padding: 0 5px;margin-right: -10px;" ></span><input type="text" id="bsAges" name="bsAges[]" value="" class="form-control"  placeholder="Age e.g 0-6 months"  maxlength="256" /></div></td><td><input type="number" name="bsPrice[]" value="0" placeholder="Enter Price i.e 10" class="form-control total_amount"/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
         });
 
         $(document).on('click', '.btn_remove', function() {
@@ -295,39 +338,41 @@
                 }
             });
 
-            if(formData.length > "4"){
+            if (formData.length > "4") {
                 var mergedObject = jsonData['name[]'].reduce(function(result, key, index) {
-                result[key] = jsonData['amount[]'][index];
-                return result;   
+                    result[key] = jsonData['amount[]'][index];
+                    return result;
                 }, {});
 
                 //     // Convert JSON object to string for demonstration
                 jsonString = JSON.stringify(mergedObject);
                 saveDataToSession(jsonString);
-              }else{
+            } else {
                 alert("Error! please add more fields..")
-              }
-        
+            }
+
         });
 
         function saveDataToSession(data) {
             $.ajax({
                 type: 'POST',
                 url: '<?= base_url(); ?>/Service/saveServiceDataToSession', // Update with your controller and method URL
-                data: { data: data },
-                beforeSend: function(){
+                data: {
+                    data: data
+                },
+                beforeSend: function() {
                     $('#add_slots').text('Saving...');
                 },
                 success: function(response) {
-                    $('#slotCount').text('Total Slot ('+response+')')
+                    $('#slotCount').text('Total Slot (' + response + ')')
                     alert('Data saved successfully');
-                    
+
                     $('#add_slots').text('Save Changes');
                     // console.log('Data saved to session successfully'+ response);
                 },
                 error: function(xhr, status, error) {
                     $('#add_slots').text('Save Changes');
-                    alert('Error saving data'+ error);
+                    alert('Error saving data' + error);
                     // console.error('Error saving data to session:', error);
                 }
             });
@@ -336,24 +381,24 @@
     });
 </script>
 
-    <script>
-        $(document).ready(function() {
-            // Save data to session storage when button is clicked
-            $('#saveButton').click(function() {
-                console.log(jsonString);
-                // var dataToSave = $('#dataInput').val();
-                sessionStorage.setItem('savedData', jsonString);
-                // console.log('Data saved to session storage: ' + dataToSave);
-            });
-
-            // Retrieve data from session storage when button is clicked
-            $('#retrieveButton').click(function() {
-                var retrievedData = sessionStorage.getItem('savedData');
-                if (retrievedData) {
-                    $('#displayData').text('Data retrieved from session storage: ' + retrievedData);
-                } else {
-                    $('#displayData').text('No data found in session storage.');
-                }
-            });
+<script>
+    $(document).ready(function() {
+        // Save data to session storage when button is clicked
+        $('#saveButton').click(function() {
+            console.log(jsonString);
+            // var dataToSave = $('#dataInput').val();
+            sessionStorage.setItem('savedData', jsonString);
+            // console.log('Data saved to session storage: ' + dataToSave);
         });
-    </script>
+
+        // Retrieve data from session storage when button is clicked
+        $('#retrieveButton').click(function() {
+            var retrievedData = sessionStorage.getItem('savedData');
+            if (retrievedData) {
+                $('#displayData').text('Data retrieved from session storage: ' + retrievedData);
+            } else {
+                $('#displayData').text('No data found in session storage.');
+            }
+        });
+    });
+</script>

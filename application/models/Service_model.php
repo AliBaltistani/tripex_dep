@@ -14,12 +14,33 @@ class Service_model extends CI_Model
      * @param string $searchText : This is optional search text
      * @return number $count : This is row count
      */
+    protected $table = 'tbl_services';
+    protected $fillable = [
+        'serviceId',
+        'serviceTitle',
+        'serviceDescription',	
+        'serviceImages',
+        'serviceBanner',
+        'serviceType',
+        'supplierName',	
+        'supplierId',
+        'extraInfo',
+        'categoryId',	
+        'subcategoryId',	
+        'status',
+        'popularity',
+        'createdBy',
+        'createdDtm',
+        'updatedBy',
+        'updatedDtm',
+        'isDeleted',
+       ];
 
      function getServiceSingle($serviceId)
     {
        $this->db->select('s.serviceId, s.serviceTitle, s.serviceDescription, s.serviceImages, s.serviceBanner, 
        s.serviceType, s.extraInfo, sc.subcatName, sc.extraInfo AS scExtraInfo, us.userId, us.name');
-        $this->db->from('tbl_services AS s');
+        $this->db->from($this->table.' AS s');
         $this->db->join('tbl_subcategories AS sc', 'sc.subcatId = s.subcategoryId');
         $this->db->join('tbl_users AS us', 'us.userId = s.supplierId');
         $this->db->where('s.serviceId', $serviceId);
@@ -34,7 +55,7 @@ class Service_model extends CI_Model
     {
 
         $this->db->select('BaseTbl.serviceId, BaseTbl.serviceTitle, BaseTbl.serviceDescription, BaseTbl.serviceImages, BaseTbl.extraInfo, BaseTbl.serviceBanner, BaseTbl.status, BaseTbl.createdDtm');
-        $this->db->from('tbl_services as BaseTbl');
+        $this->db->from($this->table .' as BaseTbl');
         if(!empty($searchText)) {
             $likeCriteria = "(BaseTbl.serviceTitle LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
@@ -58,7 +79,7 @@ class Service_model extends CI_Model
     function listing($searchText,$serviceType, $page, $segment)
     {
       $this->db->select('BaseTbl.serviceId, BaseTbl.serviceTitle, BaseTbl.serviceDescription, BaseTbl.serviceImages, BaseTbl.extraInfo, BaseTbl.serviceBanner, BaseTbl.status, BaseTbl.createdDtm');
-        $this->db->from('tbl_services as BaseTbl');
+        $this->db->from($this->table . ' as BaseTbl');
         if(!empty($searchText)) {
             $likeCriteria = "(BaseTbl.serviceTitle LIKE '%".$searchText."%')";
             $this->db->where($likeCriteria);
@@ -78,7 +99,7 @@ class Service_model extends CI_Model
     function listingBySid($serviceType)
     {
       $this->db->select('BaseTbl.serviceId, BaseTbl.serviceTitle, BaseTbl.status');
-        $this->db->from('tbl_services as BaseTbl');
+        $this->db->from($this->table . ' as BaseTbl');
         $this->db->where('BaseTbl.subCategoryId',$serviceType);
         $this->db->where('BaseTbl.isDeleted', 0);
         $this->db->order_by('BaseTbl.serviceId', 'DESC');
@@ -110,7 +131,7 @@ class Service_model extends CI_Model
     function addNewServices($serviceInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('tbl_services', $serviceInfo);
+        $this->db->insert($this->table, $this->get_fillables($serviceInfo));
         
         $insert_id = $this->db->insert_id();
         
@@ -127,7 +148,7 @@ class Service_model extends CI_Model
     function getServiceInfo($serviceId)
     {
         $this->db->select('*');
-        $this->db->from('tbl_services');
+        $this->db->from($this->table);
         $this->db->where('serviceId', $serviceId);
         $this->db->where('isDeleted', 0);
         $query = $this->db->get();
@@ -144,7 +165,7 @@ class Service_model extends CI_Model
     function editServices($serviceInfo, $serviceId)
     {
         $this->db->where('serviceId', $serviceId);
-        $this->db->update('tbl_services', $serviceInfo);
+        $this->db->update($this->table, $this->get_fillables($serviceInfo));
         
         return TRUE;
     }
@@ -189,4 +210,17 @@ class Service_model extends CI_Model
         
         return $query->result();
     }
+
+
+    public function get_fillables($data){
+        $data = (array) $data;
+		if(!empty($data)){
+            foreach($data as $key => $d1){
+                if(!array_key_exists($key, array_flip($this->fillable))){
+                    unset($data[$key]);
+                }
+            }
+        }
+        return $data;
+	}
 }

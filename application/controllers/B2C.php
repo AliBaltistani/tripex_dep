@@ -223,7 +223,7 @@ class B2C extends BaseControllerFrontend
 
      public function booking_checkout()
     {
-
+    
       
       $id = $_REQUEST['serviceId'] ?? '';
       if($id==""){ redirect('pagenotfound');}
@@ -268,9 +268,9 @@ class B2C extends BaseControllerFrontend
               redirect('b2c/transportation-package/process-booking/'.$id);
              }
 
-             if(isset($_REQUEST['baby_seat'])){
-              $quantity_child = 1;
-             }
+            //  if(isset($_REQUEST['baby_seat'])){
+            //   $quantity_child = 1;
+            //  }
 
              
             //  $supplier_name = "";
@@ -309,11 +309,16 @@ class B2C extends BaseControllerFrontend
 
             // required data form booking
             
-              $extra = array(
-                'cutomerEmail' => ($this->input->post('customer_email'))?? '' ,
-                'slotNo' => ($this->input->post('slot_no'))?? '',
-                'payMethod' => 'Online Payment',
-              );
+            $extra = array(
+              'cutomerEmail' => ($this->input->post('customer_email'))?? '' ,
+              'slotNo' => $this->input->post('slot_no')?? '',
+              'payMethod' => 'Online Payment',
+              'flight_no' => $this->input->post('flight_no') ?? '',
+              'ad_time' => $this->input->post('ad_time') ?? '',
+              'baby_seats' =>json_encode($_POST['babySeat_qty'] ?? []),
+              'driver_notes' =>$_POST['sp_note'] ?? '',
+            );
+
 
             $data['serviceId'] =  $id;
             $data['bRefNo'] =  $uniqueRefNo;

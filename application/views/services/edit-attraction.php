@@ -2,7 +2,7 @@
 <div class="col-md-3">
     <label for="priceAdult">Price for Adult (AED) * </label>
     <div class="input-group"> 
-      <span class="input-group-addon" style="background: #f6f6f6;!important"> <i class="fa fa-pencil"  ></i>&nbsp
+      <span class="input-group-addon" style="background: #f6f6f6 !important;"> <i class="fa fa-pencil"  ></i>&nbsp
        <input type="text" name="priceAdultLabel" id="priceAdultLabel" value=" <?= (set_value('priceAdultL')) ? set_value('priceAdultL') : $pAdultL ?? '(8 years +)'; ?>"  style="max-width: 100px;border: none;padding: 0 5px;margin-right: -10px;" >
       </span>
       <input type="number" class="form-control required" value="<?php echo $pAdult; ?>" id="priceAdult" name="priceAdult" maxlength="256" />
@@ -13,7 +13,7 @@
     <div class="form-group">
         <label for="priceChild">Price for Child (AED) *</label>
          <div class="input-group"> 
-          <span class="input-group-addon" style="background: #f6f6f6;!important"> <i class="fa fa-pencil" ></i>&nbsp
+          <span class="input-group-addon" style="background: #f6f6f6 !important;"> <i class="fa fa-pencil" ></i>&nbsp
            <input type="text" name="priceChildLabel" id="priceChildLabel" value=" <?= (set_value('priceChildL')) ? set_value('priceChildL') : $pChildL ?? '(3 to 8 years)'; ?>"  style="max-width: 100px;border: none;padding: 0 5px;margin-right: -10px;" >
           </span>
           <input type="number" class="form-control required" id="priceChild" name="priceChild" value="<?php echo $pChild; ?>" />

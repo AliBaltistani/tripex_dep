@@ -1,12 +1,12 @@
 <?php
-  
-    $spId ='';
-    $spName =  '';
-    $spEmail = '';
-    $spMobile =  '';
-    $spStatus = '';
 
-if(!empty($suppliers)){
+$spId = '';
+$spName =  '';
+$spEmail = '';
+$spMobile =  '';
+$spStatus = '';
+
+if (!empty($suppliers)) {
     $spId = $suppliers->id ?? '';
     $spName = $suppliers->name ?? '';
     $spEmail = $suppliers->email ?? '';
@@ -41,9 +41,15 @@ if (!empty($records)) {
     $cost = $records->bCost;
     $sale = $records->bSale;
     $status = $records->status;
-    $extraInfo = $records->extraInfo;
+    $extraInfo = json_decode($records->extraInfo);
 
-    
+    $cEmail = $extraInfo->cutomerEmail ?? '';
+    $slotNo = $extraInfo->slotNo ?? '';
+    $payMethod = $extraInfo->payMethod ?? '';
+    $flight_no = $extraInfo->flight_no ?? '';
+    $ad_time = $extraInfo->ad_time ?? '';
+    $driver_notes = $extraInfo->driver_notes ?? '';
+    $baby_seats = json_decode($extraInfo->baby_seats ?? '');
 } else {
     redirect('booking');
 }
@@ -114,16 +120,16 @@ if (!empty($records)) {
                             </tr>
                             <tr>
                                 <th>Guest Email : </th>
-                                <td> <?= "abc123@gmail.com" ?> </td>
+                                <td> <?= $cEmail ?> </td>
                             </tr>
                             <tr>
                                 <th>Status : </th>
                                 <td id="pay_status1">
                                     <?php
-                                        if ($status == ACTIVE) {
-                                        ?> <span class="label label-success">CONFIRMED</span>
+                                    if ($status == ACTIVE) {
+                                    ?> <span class="label label-success">CONFIRMED</span>
                                     <?php } else if ($status == CANCEL) {
-                                        ?> <span class="label label-danger">CACELED</span>
+                                    ?> <span class="label label-danger">CACELED</span>
                                     <?php } else { ?>
                                         <span class="label label-warning">PENDING</span>
                                     <?php } ?>
@@ -141,37 +147,37 @@ if (!empty($records)) {
                 </div><!-- /.box -->
             </div>
 
-            <?php if(!empty($suppliers)){ ?>
-            <div class="col-md-6">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title"> Supplier Details </h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>Supplier Name : </th>
-                                <td> <?= $spName ?> </td>
-                            </tr>
-                            <tr>
-                                <th>Supplier Contact : </th>
-                                <td> <?= $spMobile ?> </td>
-                            </tr>
-                            <tr>
-                                <th>Supplier Email : </th>
-                                <td> <?= $spEmail ?> </td>
-                            </tr>
-                            <tr>
-                                <th>Supplier Status : </th>
-                                <td>
-                                    <?php if ($spStatus == '0') { ?>
-                                        <span class="label label-success">Active</span>
-                                    <?php } else { ?>
-                                        <span class="label label-warning">Not Available</span>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <!-- <tr>
+            <?php if (!empty($suppliers)) { ?>
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title"> Supplier Details </h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Supplier Name : </th>
+                                    <td> <?= $spName ?> </td>
+                                </tr>
+                                <tr>
+                                    <th>Supplier Contact : </th>
+                                    <td> <?= $spMobile ?> </td>
+                                </tr>
+                                <tr>
+                                    <th>Supplier Email : </th>
+                                    <td> <?= $spEmail ?> </td>
+                                </tr>
+                                <tr>
+                                    <th>Supplier Status : </th>
+                                    <td>
+                                        <?php if ($spStatus == '0') { ?>
+                                            <span class="label label-success">Active</span>
+                                        <?php } else { ?>
+                                            <span class="label label-warning">Not Available</span>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
                                 <th>Action: </th>
                                 <td>
                                     <a class="btn btn-sm btn-success" href="<?php echo base_url() . 'booking/sendBookingPDF?id=' . $spId; ?>" title="Send Booking Detail to Supplier">
@@ -184,10 +190,10 @@ if (!empty($records)) {
                                     <a class="btn btn-sm btn-danger deleteBooking" href="#" data-bookingid="<?php echo $bid; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr> -->
-                        </table>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
             <?php } ?>
 
         </div>
@@ -203,7 +209,7 @@ if (!empty($records)) {
                         <table class="table table-hover">
 
                             <tr>
-                            <th rowspan="16">.</th>
+                                <th rowspan="19">.</th>
                                 <th>Booking Ref.#</th>
                                 <td><b><?= $rno ?></b></td>
                             </tr>
@@ -218,16 +224,16 @@ if (!empty($records)) {
                                 </tr>
 
                                 <tr>
-                                <th>Type</th>
-                                <td><?php echo $type; ?></td>
-                            </tr>
+                                    <th>Type</th>
+                                    <td><?php echo $type; ?></td>
+                                </tr>
 
-                            <tr>
-                                <th>Theme Parks Ticket</th>
-                                <td><?php echo $tpTicket; ?></td>
-                            </tr>
+                                <tr>
+                                    <th>Theme Parks Ticket</th>
+                                    <td><?php echo $tpTicket; ?></td>
+                                </tr>
 
-                        
+
                             <?php } ?>
                             <tr>
                                 <th>Booking Date</th>
@@ -251,7 +257,17 @@ if (!empty($records)) {
 
                             <tr>
                                 <th>Child</th>
-                                <td><?php echo $child; ?></td>
+                                <td><?php echo ($child != 0) ? $child : '';
+                                    echo '<br>';
+                                    if ($baby_seats) {
+                                        foreach ($baby_seats as $key => $bs) {
+                                            $key = str_replace('_', ' ', ucwords($key));
+                                            echo $key . ' = ' . $bs . '<br>';
+                                        }
+                                    }
+                                    ?>
+
+                                </td>
                             </tr>
 
                             <tr>
@@ -285,8 +301,28 @@ if (!empty($records)) {
 
                             <tr>
                                 <th>total Price</th>
-                                <td><?php echo $tPrice ." AED"; ?></td>
-                            </tr>    
+                                <td><?php echo $tPrice . " AED"; ?></td>
+                            </tr>
+
+                            <?php if ($flight_no) { ?>
+                                <tr>
+                                    <th>Flight No</th>
+                                    <td><?= $flight_no ?? ''; ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($ad_time) { ?>
+                                <tr>
+                                    <th>Arrival Or Departure Time in UAE</th>
+                                    <td><?= $ad_time ?? ''; ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($driver_notes) { ?>
+                                <tr>
+                                    <th>Special Request/Driver Note</th>
+                                    <td><?= $driver_notes ?? ''; ?></td>
+                                </tr>
+                            <?php } ?>
+
 
                         </table>
 
@@ -300,89 +336,5 @@ if (!empty($records)) {
 
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Supplier</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Multiple slots -->
-                <?php
-                $data['roles'] = $roles;
-                $data['bookingId'] = $bid;
-                $data['params'] = 'booking/view-more?serId=' . $bid;
-                $this->load->view('suppliers/form_data', $data) ?>
-                <!-- End Multiple slots -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- <button type="submit" name="submit" id="trans_form_submit" class="btn btn-success">Save changes</button> -->
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Modal -->
-<script src="<?php echo base_url(); ?>assets/admin/js/addUser.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/common.js" charset="utf-8"></script>
-
-<!-- <script>
-    $(document).ready(function() {
-        $('#transaction_submit').submit(function(event) {
-            event.preventDefault(); // Prevent form submission
-            const serializedData =  serializeForm();
-            jsonString = JSON.stringify(serializedData);
-            updateTransaction(jsonString);
-
-            // console.log(jsonString);
-        });
-
-        function serializeForm() {
-            const form = document.getElementById('transaction_submit');
-            const formData = new FormData(form);
-            const serializedData = {};
-
-            for (const [key, value] of formData.entries()) {
-                if (!serializedData[key]) {
-                    serializedData[key] = [];
-                }
-                serializedData[key] = value;
-            }
-
-            return serializedData; 
-            // You can use serializedData object as needed
-       }
-
-
-        function updateTransaction(data) {
-            $.ajax({
-                type: 'POST',
-                url: '<?= base_url(); ?>/Booking/updateTransaction', // Update with your controller and method URL
-                data: {
-                    data: data
-                },
-                beforeSend: function() {
-                    $('#trans_form_submit').text('Saving...');
-                },
-                success: function(response) {
-                   if(response){
-                    $('#pay_status').html('<span class="label label-success">Success</span>');
-                    $('#pay_status1').html('<span class="label label-success">Success</span>');
-                   }
-                   $('#trans_form_submit').text('Save Changes');
-                },
-                error: function(xhr, status, error) {
-                    $('#trans_form_submit').text('Save Changes');
-                    alert('Error saving data' + error);
-                    // console.error('Error saving data to session:', error);
-                }
-            });
-        }
-
-    });
-</script> -->

@@ -77,6 +77,13 @@
 
 			$opChild = (int) $extra->prices->priceChild;
 			$opAdult = (int) $extra->prices->priceAdult;
+
+			$temp_SeatOp = (object) [
+				'bsLabel' => [ 0 => ''],
+				'bsAges' =>  [ 0 => ''],
+				'bsPrice' => [ 0 => ''],
+			 ];
+			   $babySeatOp  = json_decode($extra->prices->babySeats ?? json_encode($temp_SeatOp));
 		}
 		if (isset($extra->others)) {
 			$cLabel = strtolower($extra->others->categoryLabel);
@@ -355,7 +362,7 @@
 				</div>
 
 			</div>
-			<div class="col-xl-4">
+			<div class="col-xl-4"  id="booking-form">
 				<?php 
 				if($cLabel == ATTRACTION)
 				{ include('attraction_booking.php'); }

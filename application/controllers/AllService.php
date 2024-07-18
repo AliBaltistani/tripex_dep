@@ -141,7 +141,13 @@ class AllService extends BaseController
 
   public function addNew()
   {
-    //   echo '<pre>'; print_r($_POST); die;
+    $_POST['babySeats']['bsLabel'] = $_POST['bsLabel'] ?? [];
+    $_POST['babySeats']['bsAges'] = $_POST['bsAges'] ?? [];
+    $_POST['babySeats']['bsPrice'] = $_POST['bsPrice'] ?? [];
+    if(isset($_POST['bsLabel'])){ unset($_POST['bsLabel']); }
+    if(isset($_POST['bsAges'])){ unset($_POST['bsAges']); }
+    if(isset($_POST['bsPrice'])){ unset($_POST['bsPrice']); }
+    
     $category = "";
     $id = "";
     if (isset($_REQUEST['id'])) {
@@ -162,7 +168,7 @@ class AllService extends BaseController
       $this->form_validation->set_rules('description', 'Description', 'trim|required');
       $this->form_validation->set_rules('status', 'status', 'trim|callback_html_clean|required');
       $this->form_validation->set_rules('subcatId', 'category', 'trim|callback_html_clean|required');
-      $this->form_validation->set_rules('priceChild', 'Price Child', 'trim|callback_html_clean|required|max_length[256]');
+      // $this->form_validation->set_rules('priceChild', 'Price Child', 'trim|callback_html_clean|required|max_length[256]');
       $this->form_validation->set_rules('priceAdult', 'Price Child', 'trim|callback_html_clean|required|max_length[256]');
       $this->form_validation->set_rules('type', 'Type', 'trim|callback_html_clean|required');
       $this->form_validation->set_rules('vehicleCode', 'vehicle Code', 'trim|callback_html_clean|required');
@@ -204,7 +210,8 @@ class AllService extends BaseController
           'priceChild' => $this->input->post('priceChild') ?? 0.00,
           'priceAdult' => $this->input->post('priceAdult') ?? 0.00,
           'priceAdultL' => $this->input->post('priceAdultLabel') ?? '',
-          'priceChildL' => $this->input->post('priceChildLabel') ?? ''
+          'priceChildL' => $this->input->post('priceChildLabel') ?? '',
+          'babySeats' => json_encode($_POST['babySeats'] ?? [])
         );
 
 
@@ -314,6 +321,13 @@ class AllService extends BaseController
         }
       }
 
+      $_POST['babySeats']['bsLabel'] = $_POST['bsLabel'] ?? [];
+      $_POST['babySeats']['bsAges'] = $_POST['bsAges'] ?? [];
+      $_POST['babySeats']['bsPrice'] = $_POST['bsPrice'] ?? [];
+      if(isset($_POST['bsLabel'])){ unset($_POST['bsLabel']); }
+      if(isset($_POST['bsAges'])){ unset($_POST['bsAges']); }
+      if(isset($_POST['bsPrice'])){ unset($_POST['bsPrice']); }
+
       $data['serviceTitle'] = ($this->input->post('title'));
       $data['serviceDescription'] = ($this->input->post('description'));
       $data['serviceType'] = str_replace('-', ' ', $category);
@@ -329,7 +343,8 @@ class AllService extends BaseController
         'priceChild' => $this->input->post('priceChild') ?? 0.00,
         'priceAdult' => $this->input->post('priceAdult') ?? 0.00,
         'priceAdultL' => $this->input->post('priceAdultLabel') ?? '',
-        'priceChildL' => $this->input->post('priceChildLabel') ?? ''
+        'priceChildL' => $this->input->post('priceChildLabel') ?? '',
+        'babySeats' => json_encode($_POST['babySeats'] ?? [])
       );
 
 

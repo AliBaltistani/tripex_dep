@@ -42,20 +42,31 @@ if ($sExtraInfoJsn != "") {
 	if (isset($extra->prices)) {
 		$pChild = $extra->prices->priceChild;
 		$pAdult = $extra->prices->priceAdult;
-		$pAdultL = $extra->prices->priceAdultL ?? '(8 Years +)';
-		$pChildL = $extra->prices->priceChildL ?? '(3 to 8 years)';
+		$pAdultL = $extra->prices->priceAdultL ?? '';
+		$pChildL = $extra->prices->priceChildL ?? '';
+        $temp_SeatOp = (object) [
+           'bsLabel' => [ 0 => ''],
+           'bsAges' =>  [ 0 => ''],
+           'bsPrice' => [ 0 => ''],
+        ];
+		  $babySeatOp  = json_decode($extra->prices->babySeats ?? json_encode($temp_SeatOp));
+
+        // pre($babySeatOp); die;
 	}
     
 	if (isset($extra->others)) {
 		$cLabel = strtolower($extra->others->categoryLabel);
-		$type = $extra->others->type;
-		$vCode = $extra->others->vehicleCode;
-		$tSlot = $extra->others->Totalslot;
-		$inclusion = $extra->others->inclusion;
-		$exclusion = $extra->others->exclusion;
-		 $terms = $extra->others->termsAndService;
+		$type = $extra->others->type ??  '';
+		$vCode = $extra->others->vehicleCode ?? '';
+		$tSlot = $extra->others->Totalslot ?? '';
+		$inclusion = $extra->others->inclusion ?? '';
+		$exclusion = $extra->others->exclusion ?? '';
+		$terms = $extra->others->termsAndService ?? '';
+		$discount_as = $extra->others->discount_as ?? 'total';
+		$apply_tax = $extra->others->apply_tax ?? '1';
         
 	}
+
 
     if($tSlot != "0"){
        $slotsArr = json_decode($tSlot);
@@ -205,6 +216,44 @@ if ($sExtraInfoJsn != "") {
                                     <input type="file" name="serviceImage[]" id="serviceImage" size="20" multiple accept="image/*" />
                                 </div>
                             </div>
+                            <?php 
+                            //  $tooltip = "Note: The Individual Option means a discount will be applied to each child's and each adult's price separately.If Total Option is selected means a the discount amount will be applied to the total sum of all prices (child and adult)." ?>
+                            <!-- <div class="col-md-3">
+                                
+                                <div class="form-group">
+                                    <label for="discount_as" class="bg-dark" tabindex="0" data-toggle="tooltip" title="<?= $tooltip ?>"> <i class="fa fa-question text-primary"></i> Apply Discount As: </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discount_as" value="total" id="discount_as" <?= (($discount_as ?? '')== 'total') ?'checked' :''; ?> >
+                                        <label class="form-check-label" for="discount_as" style="font-weight: 500;" >
+                                            Total Price  (Child + Adult )
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discount_as" value="ind" id="discount_as2" <?= (($discount_as ?? '')== 'ind') ?'checked' :''; ?> >
+                                        <label class="form-check-label" for="discount_as2" style="font-weight: 500;" >
+                                        Individual Prices (Child & Adult )
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="apply_tax">Tax Apply</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="apply_tax" value="1" id="apply_tax" style="font-weight: 500;" <?= (($apply_tax ?? '')== '1') ? 'checked' : '' ; ?> >
+                                        <label class="form-check-label" for="apply_tax1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="apply_tax" value="0"  id="apply_tax2"  style="font-weight: 500;" <?= (($apply_tax ?? '')== '0') ? 'checked' :''; ?> >
+                                        <label class="form-check-label" for="apply_tax2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div><!-- /.box-body -->
 
@@ -333,7 +382,7 @@ if ($sExtraInfoJsn != "") {
             addamount += 0;
             console.log('amount: ' + addamount);
             i++;
-            $('#dynamic_field').append('<tr id="row' + i + '"><td><input type="text" name="name[]" placeholder="Enter Slot Name" class="form-control name_list"/></td><td><input type="number" name="amount[]" value="0" placeholder="Enter Slot Price" class="form-control total_amount"/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+            $('#dynamic_field').append('<tr id="row' + i + '"><td><div class="input-group"><span class="input-group-addon" style="background: #f6f6f6 !important;"> <i class="fa fa-pencil" ></i>&nbsp<input type="text" id="bsLabel' + i + '" name="bsLabel[]" placeholder="e.g Child Seat"   value=""  style="max-width: 100px;border: none;padding: 0 5px;margin-right: -10px;" ></span><input type="text" id="bsAges" name="bsAges[]" value="" class="form-control"  placeholder="Age e.g 0-6 months"  maxlength="256" /></div></td><td><input type="number" name="bsPrice[]" value="0" placeholder="Enter Price i.e 10" class="form-control total_amount"/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
         });
 
         $(document).on('click', '.btn_remove', function() {
@@ -368,34 +417,41 @@ if ($sExtraInfoJsn != "") {
                 }
             });
 
-            if(formData.length > "4"){
+            if (formData.length > "4") {
                 var mergedObject = jsonData['name[]'].reduce(function(result, key, index) {
-                result[key] = jsonData['amount[]'][index];
-                return result;   
+                    result[key] = jsonData['amount[]'][index];
+                    return result;
                 }, {});
 
                 //     // Convert JSON object to string for demonstration
                 jsonString = JSON.stringify(mergedObject);
                 saveDataToSession(jsonString);
-              }else{
+            } else {
                 alert("Error! please add more fields..")
-              }
-        
+            }
+
         });
 
         function saveDataToSession(data) {
             $.ajax({
                 type: 'POST',
                 url: '<?= base_url(); ?>/Service/saveServiceDataToSession', // Update with your controller and method URL
-                data: { data: data },
+                data: {
+                    data: data
+                },
+                beforeSend: function() {
+                    $('#add_slots').text('Saving...');
+                },
                 success: function(response) {
-                    $('#slotCount').text('Total Slot ('+response+')')
+                    $('#slotCount').text('Total Slot (' + response + ')')
                     alert('Data saved successfully');
+
+                    $('#add_slots').text('Save Changes');
                     // console.log('Data saved to session successfully'+ response);
                 },
                 error: function(xhr, status, error) {
-                    
-                    alert('Error saving data'+ error);
+                    $('#add_slots').text('Save Changes');
+                    alert('Error saving data' + error);
                     // console.error('Error saving data to session:', error);
                 }
             });
@@ -403,6 +459,7 @@ if ($sExtraInfoJsn != "") {
 
     });
 </script>
+
 
     <script>
         $(document).ready(function() {
