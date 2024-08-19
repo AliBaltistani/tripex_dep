@@ -222,7 +222,8 @@ class AllService extends BaseController
           'Totalslot' => $slolInfo,
           'inclusion' => ($this->input->post('inclusion')),
           'exclusion' => ($this->input->post('exclusion')),
-          'termsAndService' => ($this->input->post('terms'))
+          'termsAndService' => ($this->input->post('terms')),
+          'transportTax' => ($this->input->post('transportTax') ?? '')
         );
         $data['extraInfo'] = json_encode($extra_info);
 
@@ -355,7 +356,8 @@ class AllService extends BaseController
         'Totalslot' => $slolInfo,
         'inclusion' => $this->input->post('inclusion'),
         'exclusion' => ($this->input->post('exclusion')),
-        'termsAndService' => ($this->input->post('terms'))
+        'termsAndService' => ($this->input->post('terms')),
+        'transportTax' => ($this->input->post('transportTax') ?? '')
       );
       $data['extraInfo'] = json_encode($extra_info);
 

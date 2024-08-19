@@ -64,6 +64,7 @@ if ($sExtraInfoJsn != "") {
 		$terms = $extra->others->termsAndService ?? '';
 		$discount_as = $extra->others->discount_as ?? 'total';
 		$apply_tax = $extra->others->apply_tax ?? '1';
+		$transportTax = $extra->others->transportTax ?? '';
         
 	}
 

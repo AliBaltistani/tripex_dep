@@ -56,13 +56,11 @@
                                 <div class="col-md-6">
                                     <label for="status">Tax Type</label>
                                     <div class="form-group">
-                                    
                                         <input type="radio" class=" required" name="tax_type" id="tax_type1" value="1" checked>
                                         <label for="tax_type1" > Count as Percentage</label> 
                                         &nbsp; &nbsp; &nbsp;
                                         <input type="radio" class="required" name="tax_type" id="tax_type2" value="2">
                                         <label for="tax_type2" >Count as AED</label>
-                    
                                    </div>
                                 </div>
                         </div><!-- /.box-body -->

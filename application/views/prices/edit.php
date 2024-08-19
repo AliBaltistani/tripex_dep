@@ -57,10 +57,10 @@
                                 <div class="col-md-6">
                                     <label for="discount_type">Charges Type</label>
                                     <div class="form-group">
-                                        <input type="radio" class=" required" name="discount_type" id="discount_type" value="percentage" checked>
+                                        <input type="radio" class=" required" name="discount_type" id="discount_type" <?php if($prices->discount_type == 'percentage'){ echo 'checked' ;} ?> value="percentage" >
                                         <label for="tax_type1" > Count as Percentage</label> 
                                         &nbsp; &nbsp; &nbsp;
-                                        <input type="radio" class="required" name="discount_type" id="discount_type" value="fixed">
+                                        <input type="radio" class="required" name="discount_type" id="discount_type" <?php if($prices->discount_type == 'fixed'){ echo 'checked' ;} ?> value="fixed">
                                         <label for="tax_type2" >Count as AED</label>
                                    </div>
                                 </div>

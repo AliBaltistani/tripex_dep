@@ -99,5 +99,10 @@
         </table>
     </div>
 </div>
-
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="transportTax">Transportation Tax (If Any)</label>
+        <input type="number" class=" form-control required" id="transportTax" name="transportTax" value="<?php echo $transportTax ?? ''; ?>" />
+    </div>
+</div>
 
