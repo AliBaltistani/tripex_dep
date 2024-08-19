@@ -1934,7 +1934,10 @@
 
           <!-- <input type="hidden" name="customer_number" id="customer_number_valid" value="<?= set_value('customer_number'); ?>" required> -->
 
-          <div class="total-price"><span>Total Price:</span><strong id="totalPrice">0.00 <small>AED</small></strong></div>
+          <?php if($trspTax != '' || $trspTax != '0'){ ?>
+          <div class="transportTax" style="display: flex;justify-content: space-between;"><span>Transport Tax:</span><strong id="transportTax"><?php echo $trspTax ?? 0; ?> <small>AED</small></strong></div>
+          <?php } ?>
+          <div class="total-price" style="display: flex;justify-content: space-between;"><span>Total Price:</span><strong id="totalPrice">0.00 <small>AED</small></strong></div>
           <?= '<small>' . $this->form_validation->error('totalPrice_hidden') . '</small>' ?>
           <button type="submit" id="btnSubmit" class="primary-btn1 two">Book Now</button>
         </div>
@@ -2048,12 +2051,13 @@
     var babySeatPrice = 0;
     var numBabySeat = 0;
     var totalBsPrice = 0;
+    var transportTax = '<?php echo $trspTax ?? 0; ?>';
 
     var addBabySeatPrice = false;
 
     // Function to update total price
     function updateTotalPrice() {
-      totalPrice = (adultPrice * numAdults) + ((childPrice * numChildren)) + totalBsPrice;
+      totalPrice = ((adultPrice * numAdults) + ((childPrice * numChildren)) + totalBsPrice) + parseInt(transportTax);
 
       // var baby_seat = $('#baby_seat').is(':checked');
 

@@ -227,7 +227,7 @@ if (!function_exists('checkDiscount')) {
 			$price_model = new Prices_model();
 			$priceData = $price_model->getWhere(['role_id' => $user_role_id, 'status' => ACTIVE])[0] ?? array();
             if (!empty($priceData)) {
-                $inPercent = ($priceData->discount_type == 'percentage') ? true: false; 
+                $inPercent = (trim(strtolower($priceData->discount_type)) == 'percentage') ? true: false; 
 				if($inPercent == true){
                     $discount =  (int) $priceData->discount_amount;
                     $d_amount = (int) (($discount * ((int) $price_oginal)) / 100);

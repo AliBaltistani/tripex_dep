@@ -93,6 +93,7 @@
 			$exclusion = $extra->others->exclusion;
 			$terms = $extra->others->termsAndService;
 			$vCode = $extra->others->vehicleCode;
+			$trspTax = $extra->others->transportTax ?? 0;
 		}
 	} 
 	if($scExtraInfo != ""){
