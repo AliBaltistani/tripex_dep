@@ -137,25 +137,16 @@
                                     <input type="file" name="serviceImage[]" id="serviceImage" size="20" multiple accept="image/*" />
                                 </div>
                             </div>
+                            <hr>
+                             <div class="col-md-6">
+                                <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="topSellProd" value="1"  >
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Show in (Top Selling Tours) ?</label>
+                                </div>
+                            </div> 
                             <?php  
                             // $tooltip = "Note: The Individual Option means a discount will be applied to each child's and each adult's price separately.If Total Option is selected means a the discount amount will be applied to the total sum of all prices (child and adult)." ?>
-                            <!-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="discount_as" class="bg-dark" tabindex="0" data-toggle="tooltip" title="<?= $tooltip ?>"> <i class="fa fa-question text-primary"></i> Apply Discount As: </label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="discount_as" value="total" id="discount_as" checked>
-                                        <label class="form-check-label" for="discount_as" style="font-weight: 500;" >
-                                            Total Price  (Child + Adult )
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="discount_as" value="ind" id="discount_as2" >
-                                        <label class="form-check-label" for="discount_as2" style="font-weight: 500;" >
-                                        Individual Prices (Child & Adult )
-                                        </label>
-                                    </div>      
-                                </div>
-                            </div> -->
+                            
                             <!-- <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="apply_tax">Tax Apply</label>

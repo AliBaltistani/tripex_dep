@@ -34,7 +34,15 @@ class B2C extends BaseControllerFrontend
       $data['records'] = $this->b2c->getCategory();
       $data['popular_tours'] = $this->b2c->get_popular_services();
      
+      $topSellProds = (object) $this->b2c->get_where(['isTopsellingprod' => 1]);
+      if(!empty($topSellProds)){
+        foreach($topSellProds as $tsp){
+          array_push($data['popular_tours'], $tsp);
+        }
+        
+      }
       foreach($data['records'] as $single){
+        
         $cName = str_replace(' ','',($single->categoryName ?? ''));
         if("TopSellingTours" == $cName){
            $arr = $this->b2c->get_where(['categoryId' => $single->categoryId ?? '']);

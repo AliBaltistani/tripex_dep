@@ -203,6 +203,7 @@ class AllService extends BaseController
         $data['categoryId'] = $id;
         $data['subcategoryId'] = ($this->input->post('subcatId'));
         $data['status'] = ($this->input->post('status'));
+        $data['isTopsellingprod'] = ($this->input->post('topSellProd') ?? '0');
         $data['createdBy'] = $this->vendorId;
         $data['createdDtm'] = date('Y-m-d H:i:s');
 
@@ -337,6 +338,7 @@ class AllService extends BaseController
       $data['categoryId'] = $maincatid;
       $data['subcategoryId'] = ($this->input->post('subcatId'));
       $data['status'] = ($this->input->post('status'));
+      $data['isTopsellingprod'] = ($this->input->post('topSellProd') ?? '0');
       $data['createdBy'] = $this->vendorId;
       $data['createdDtm'] = date('Y-m-d H:i:s');
 

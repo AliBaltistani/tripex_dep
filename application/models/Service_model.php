@@ -28,6 +28,7 @@ class Service_model extends CI_Model
         'categoryId',	
         'subcategoryId',	
         'status',
+        'isTopsellingprod',
         'popularity',
         'createdBy',
         'createdDtm',

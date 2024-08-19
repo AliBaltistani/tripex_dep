@@ -13,6 +13,7 @@ $sExtraInfoJsn = $serviceInfo->extraInfo;
 $cId = $serviceInfo->categoryId;
 $scId = $serviceInfo->subcategoryId;
 $status = $serviceInfo->status;
+$topSellProd = $serviceInfo->isTopsellingprod ?? '';
 
 
 $imgArray =  array();
@@ -217,6 +218,14 @@ if ($sExtraInfoJsn != "") {
                                     <input type="file" name="serviceImage[]" id="serviceImage" size="20" multiple accept="image/*" />
                                 </div>
                             </div>
+
+                            <hr>
+                             <div class="col-md-6">
+                                <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="topSellProd" value="1"  <?php if($topSellProd == '1' ) { echo 'checked'; } ?> >
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Show in (Top Selling Tours) ?</label>
+                                </div>
+                            </div> 
                             <?php 
                             //  $tooltip = "Note: The Individual Option means a discount will be applied to each child's and each adult's price separately.If Total Option is selected means a the discount amount will be applied to the total sum of all prices (child and adult)." ?>
                             <!-- <div class="col-md-3">
