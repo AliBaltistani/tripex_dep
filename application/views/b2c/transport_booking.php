@@ -1934,7 +1934,7 @@
 
           <!-- <input type="hidden" name="customer_number" id="customer_number_valid" value="<?= set_value('customer_number'); ?>" required> -->
 
-          <?php if($trspTax != '' || $trspTax != '0'){ ?>
+          <?php if($trspTax != '' && $trspTax != '0'){ ?>
           <div class="transportTax" style="display: flex;justify-content: space-between;"><span>Transport Tax:</span><strong id="transportTax"><?php echo $trspTax ?? 0; ?> <small>AED</small></strong></div>
           <?php } ?>
           <div class="total-price" style="display: flex;justify-content: space-between;"><span>Total Price:</span><strong id="totalPrice">0.00 <small>AED</small></strong></div>
