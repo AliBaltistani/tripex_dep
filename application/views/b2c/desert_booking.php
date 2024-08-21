@@ -2006,8 +2006,8 @@
         function updateTotalPrice() {
             numChildren =  $('[data-id="babySeat_qty"]').val();
             totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
-            const typeTr = $('#transfer_option').find(':selected').val();
-            if(typeTr.trim() == 'private-transfers' && (numAdults > 0 || numChildren > 0) ){
+            const typeTrs = $('#transfer_option').find(':selected').val();
+            if(typeTrs.trim() == 'private-transfers' && (numAdults > 0 || numChildren > 0) ){
                 transportTax = isNaN(transportTax) ? 0 : transportTax;
                 totalPrice = parseFloat(totalPrice) + parseInt(transportTax)
             }
