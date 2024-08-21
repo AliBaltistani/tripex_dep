@@ -1750,9 +1750,9 @@
                         </div>
                         <?= '<small>' . $this->form_validation->error('tourDate') . '</small>' ?>
                     </div>
-                    <div class="tour-date-wrap mb-50">
+                    <div class=" mb-50">
                         <h6>Transfer Options:</h6>
-                        <select name="transfer_option" id="transfer_option">
+                        <select name="transfer_option" id="transfer_option" onchange="changePriceStatus(this)">
                             <option value="without-transfers">Without Transfers</option>
                             <option value="private-transfers">Private Transfers</option>
                         </select>
@@ -1838,7 +1838,7 @@
                                                         </span><small><?= $babySeatOp->bsPrice[$i] ?? '0'; ?> AED</small></span>
                                                         <div class="quantity-counter" style="width: 100px;">
                                                             <a href="javascript:void(0);" id="<?= 'quantity_minus_babySeat' . $i ?>" onclick="sub_baby_seat_price(this)" data-price="<?= $babySeatOp->bsPrice[$i] ?? '0'; ?>" data-input="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__minus_disabled"><i class="bi bi-dash"></i></a>
-                                                            <input type="text" name="babySeat_qty[<?= $fl_babySeat ?>]" style="padding: 0;" id="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
+                                                            <input type="text" name="babySeat_qty[<?= $fl_babySeat ?>]" data-id="babySeat_qty" style="padding: 0;" id="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
                                                             <!--  'bs_qty_'.$fl_babySeat  -->
                                                             <a href="javascript:void(0);" id="<?= 'quantity_plus_babySeat' . $i ?>" onclick="add_baby_seat_price(this)" data-price="<?= $babySeatOp->bsPrice[$i] ?? '0'; ?>" data-input="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__plus_disabled"><i class="bi bi-plus"></i></a>
                                                         </div>
@@ -1853,7 +1853,7 @@
                                                     </span><small> 25 AED</small></span>
                                                     <div class="quantity-counter" style="width: 100px;">
                                                         <a href="javascript:void(0);" id="<?= 'quantity_minus_babySeat0' ?>" onclick="sub_baby_seat_price(this)" data-price="25" data-input="<?= 'quantity_input_babySeat_0' ?>" class="quantity__minus_disabled"><i class="bi bi-dash"></i></a>
-                                                        <input type="text" name="babySeat_qty[baby_seat]" style="padding: 0;" id="<?= 'quantity_input_babySeat_0' ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
+                                                        <input type="text" name="babySeat_qty[baby_seat]" data-id="babySeat_qty" style="padding: 0;" id="<?= 'quantity_input_babySeat_0' ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
                                                         <a href="javascript:void(0);" id="<?= 'quantity_plus_babySeat0' ?>" onclick="add_baby_seat_price(this)" data-price="25" data-input="<?= 'quantity_input_babySeat_0' ?>" class="quantity__plus_disabled"><i class="bi bi-plus"></i></a>
                                                     </div>
 
@@ -1889,7 +1889,7 @@
                     <input type="hidden" name="slot_no" id="slot_no" value="NULL">
                     <!-- <input type="hidden" name="customer_number" id="customer_number_valid" value="" required> -->
                     <?php if($trspTax != '' && $trspTax != '0'){ ?>
-                    <div class="transportTax" style="display: flex;justify-content: space-between;"><span>Charges:</span><strong id="transportTax"><?php echo $trspTax ?? 0; ?> <small>AED</small></strong></div>
+                    <!-- <div class="transportTax" style="display: flex;justify-content: space-between;"><span>Charges:</span><strong id="transportTax"><?php echo $trspTax ?? 0; ?> <small>AED</small></strong></div> -->
                     <?php } ?>
                     <div class="total-price"><span>Total Price:</span><strong id="totalPrice">0.00 <small>AED</small></strong></div>
                     <?= '<small>' . $this->form_validation->error('totalPrice_hidden') . '</small>' ?>
@@ -1933,15 +1933,13 @@
         geoIpLookup: function(callback) {
             $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
                 var countryCode = (resp && resp.country) ? resp.country : "";
-                callback(countryCode);
+                // callback(countryCode);
             });
         },
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"
     });
 
-    function callback(c) {
-        console.log(c);
-    }
+    
     var reset = function() {
 
         telInput.removeClass("error");
@@ -2006,11 +2004,20 @@
 
         // Function to update total price
         function updateTotalPrice() {
-      totalPrice = ((adultPrice * numAdults) + ((childPrice * numChildren)) + totalBsPrice) + parseInt(transportTax);
+            totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
+            const trop = $('#transfer_option').find(':selected').val();
+            if(trop.trim() == 'private-transfers'){
+                totalPrice = parseFloat(totalPrice) + parseFloat(transportTax)
+            }
 
-      $("#totalPrice").text(totalPrice + " AED");
-      $("#totalPrice_hidden").val(totalPrice + " AED");
-    }
+            $("#totalPrice").text(totalPrice + " AED");
+            $("#totalPrice_hidden").val(totalPrice + " AED");
+        }
+
+       function changePriceStatus(e){
+        updateTotalPrice();
+            // updateTotalPrice();
+        }
         // function updateTotalPrice() {
 
             
@@ -2082,16 +2089,16 @@
         });
 
         function add_baby_seat_price(vls){
-    let bsPrice = $(vls).data('price');
-     let inputId = $(vls).data('input');
-     let inpVl = $("#"+inputId).val();
-     inpVl = parseInt(inpVl);
-     if (inpVl < total_capacity) {
-       $("#"+inputId).val((inpVl + 1));
-       totalBsPrice = totalBsPrice + bsPrice;
-       updateTotalPrice();
-      }
-    }
+            let bsPrice = $(vls).data('price');
+            let inputId = $(vls).data('input');
+            let inpVl = $("#"+inputId).val();
+            inpVl = parseInt(inpVl);
+            if (inpVl < total_capacity) {
+            $("#"+inputId).val((inpVl + 1));
+            totalBsPrice = totalBsPrice + bsPrice;
+            updateTotalPrice();
+            }
+        }
 
   function sub_baby_seat_price(vls){
     let bsPrice = $(vls).data('price');
