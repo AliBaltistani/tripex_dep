@@ -277,7 +277,6 @@
 							</div>
 						</div>
 						<?php 
-						// echo '<pre>'; print_r($imgArray);die;
 						 if (!empty($imgArray)) { ?>
 							<div class="col-lg-6 h-100">
 								<div class="row g-3 h-100">
@@ -365,7 +364,11 @@
 			</div>
 			<div class="col-xl-4"  id="booking-form">
 				<?php 
-				if($cLabel == ATTRACTION)
+				 if(strpos(strtolower($subcatName), 'desert')){
+					
+					include('desert_booking.php');
+									 }
+				else if($cLabel == ATTRACTION)
 				{ include('attraction_booking.php'); }
 				else if($cLabel == TRANSPORT) 
 				{include('transport_booking.php'); }

@@ -337,7 +337,7 @@ class B2C extends BaseControllerFrontend
             $data['bGuestContact'] = $this->security->xss_clean($this->input->post('customer_number'));
             $data['bTour'] = "Dubai ". ucfirst($tourType);
             $data['bType'] = "PVT";
-            $data['bThemeParksTicket'] = "";
+            $data['bThemeParksTicket'] = $this->input->post('transfer_option') ?? '';
             $data['bAddService'] = $serviceTitle;
             $data['bAdult'] = $this->security->xss_clean($this->input->post('quantity_adult'));
             $data['bChild'] = $quantity_child;

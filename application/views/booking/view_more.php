@@ -230,7 +230,7 @@ if (!empty($records)) {
 
                                 <tr>
                                     <th>Theme Parks Ticket</th>
-                                    <td><?php echo $tpTicket; ?></td>
+                                    <td><?php echo ucwords(str_replace('-',' ', $tpTicket)); ?></td>
                                 </tr>
 
 
@@ -262,7 +262,7 @@ if (!empty($records)) {
                                     if ($baby_seats) {
                                         foreach ($baby_seats as $key => $bs) {
                                             $key = str_replace('_', ' ', ucwords($key));
-                                            echo $key . ' = ' . $bs . '<br>';
+                                            echo 'Child/'.$key . ' = ' . $bs . '<br>';
                                         }
                                     }
                                     ?>

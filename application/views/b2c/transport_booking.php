@@ -1757,7 +1757,8 @@
     <div class="tab-content" id="v-pills-tabContent2">
       <div class="tab-pane fade active show" id="v-pills-booking" role="tabpanel" aria-labelledby="v-pills-booking-tab">
         <div class="sidebar-booking-form">
-          <div class="tour-date-wrap mb-25">
+       
+          <div class="tour-date-wrap mb-25 mt-5">
             <h6>Select your Pickup Date:</h6>
             <div class="form-check customdate">
               <!-- <input class="form-check-input" type="radio" name="tourDate" id="Coustom" value="option1" checked> -->
@@ -2058,12 +2059,6 @@
     // Function to update total price
     function updateTotalPrice() {
       totalPrice = ((adultPrice * numAdults) + ((childPrice * numChildren)) + totalBsPrice) + parseInt(transportTax);
-
-      // var baby_seat = $('#baby_seat').is(':checked');
-
-      // if (baby_seat == 1 ) {
-      //   totalPrice = (totalPrice + babySeatPrice);
-      // }
 
       $("#totalPrice").text(totalPrice + " AED");
       $("#totalPrice_hidden").val(totalPrice + " AED");
