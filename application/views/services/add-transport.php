@@ -82,7 +82,7 @@
 
 <div class="col-md-6">
     <div class="form-group">
-        <label for="transportTax">Transportation Tax (If Any)</label>
+        <label for="transportTax">Transportation Rates (If Any)</label>
         <input type="number" class=" form-control required" id="transportTax" name="transportTax" value="<?php echo set_value('transportTax'); ?>" />
     </div>
 </div>
