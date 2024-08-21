@@ -2007,7 +2007,8 @@
             totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
             const trop = $('#transfer_option').find(':selected').val();
             if(trop.trim() == 'private-transfers'){
-                totalPrice = parseFloat(totalPrice) + parseFloat(transportTax)
+                alert(parseInt(transportTax));
+                totalPrice = parseFloat(totalPrice) + parseInt(transportTax)
             }
 
             $("#totalPrice").text(totalPrice + " AED");
