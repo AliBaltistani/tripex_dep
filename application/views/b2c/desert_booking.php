@@ -2006,7 +2006,7 @@
         function updateTotalPrice() {
             totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
             const trop = $('#transfer_option').find(':selected').val();
-            if(trop.trim() == 'private-transfers' && (numAdults > 0 && numChildren > 0) ){
+            if(trop.trim() == 'private-transfers' && (numAdults > 0 || numChildren > 0) ){
                 transportTax = isNaN(transportTax) ? 0 : transportTax;
                 totalPrice = parseFloat(totalPrice) + parseInt(transportTax)
             }
