@@ -2004,9 +2004,10 @@
 
         // Function to update total price
         function updateTotalPrice() {
+            numChildren =  $('[data-id="babySeat_qty"]').val();
             totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
-            const trop = $('#transfer_option').find(':selected').val();
-            if(trop.trim() == 'private-transfers' && (numAdults > 0 || numChildren > 0) ){
+            const typeTr = $('#transfer_option').find(':selected').val();
+            if(typeTr.trim() == 'private-transfers' && (numAdults > 0 || numChildren > 0) ){
                 transportTax = isNaN(transportTax) ? 0 : transportTax;
                 totalPrice = parseFloat(totalPrice) + parseInt(transportTax)
             }
