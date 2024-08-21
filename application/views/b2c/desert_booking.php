@@ -2007,7 +2007,7 @@
             totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
             const trop = $('#transfer_option').find(':selected').val();
             if(trop.trim() == 'private-transfers'){
-                alert(parseInt(transportTax));
+                alert('<?php echo $trspTax ?? 0; ?>');
                 totalPrice = parseFloat(totalPrice) + parseInt(transportTax)
             }
 
