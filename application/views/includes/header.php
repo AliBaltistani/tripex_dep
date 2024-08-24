@@ -220,6 +220,9 @@
                 } else if ($cLabel == TRANSPORT) {
                   $txt =  "transportation";
                 }
+                else if ($cLabel == DESERT) {
+                  $txt =  DESERT;
+                }
                 if (check_permission($service->categoryName, 'list') == 1) { ?>
 
                   <li class="treeview">
@@ -231,17 +234,21 @@
                     <ul class="treeview-menu">
                       <li><a href="<?= base_url('packages/listing?txt=' . $txt . '&id=' . $cid); ?>"><i class="fa fa-circle-o"></i>
                           <?php if ($cLabel == ATTRACTION) {
-                            echo "Attractions";
+                            echo "Attractions Category";
                           } else if ($cLabel == TRANSPORT) {
-                            echo "Transportation";
+                            echo "Transportation Category";
+                          }else if ($cLabel == DESERT) {
+                            echo "Desert Safari Category ";
                           }
                           ?>
                         </a></li>
                       <li><a href="<?= $url; ?>"><i class="fa fa-circle-o"></i>
                           <?php if ($cLabel == ATTRACTION) {
-                            echo "Attraction Packages";
+                            echo "Attraction Services";
                           } else if ($cLabel == TRANSPORT) {
-                            echo "Transfer Types";
+                            echo "Transfer Services";
+                          } else if ($cLabel == DESERT) {
+                            echo "Desert Safari Services";
                           }
                           ?>
                         </a></li>
