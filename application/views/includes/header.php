@@ -221,7 +221,7 @@
                   $txt =  "transportation";
                 }
                 else if ($cLabel == DESERT) {
-                  $txt =  "transportation";
+                  $txt =  DESERT;
                 }
                 if (check_permission($service->categoryName, 'list') == 1) { ?>
 

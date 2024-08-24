@@ -24,6 +24,13 @@ $route['b2c/transportation-package/process-booking'] = "B2C/booking_process";
 $route['b2c/transportation-package/process-booking/(:num)'] = "B2C/booking_process/$1";
 $route['b2c/booking-confirm'] = "B2C/booking_checkout";
 
+$route['b2c/desert_safari'] = "B2C/transportation";
+$route['b2c/desert_safari/(:num)'] = "B2C/transportation/$1";
+$route['b2c/desert_safari/types'] = "B2C/transport_types";
+$route['b2c/desert_safari-package/process-booking'] = "B2C/booking_process";
+$route['b2c/desert_safari-package/process-booking/(:num)'] = "B2C/booking_process/$1";
+$route['b2c/booking-confirm'] = "B2C/booking_checkout";
+
 
 $route['B2C/fliter_services'] = "B2C/fliter_services";
 $route['b2c/fliter_services'] = "B2C/fliter_services";
