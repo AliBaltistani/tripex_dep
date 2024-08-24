@@ -100,6 +100,7 @@ define('SEGMENT_FOUR',								4);
 
 define('ATTRACTION',								'attraction');
 define('TRANSPORT',								'transportation');
+define('DESERT',								'desert_safari');
 
 
 define('ACTIVE',								1); // STATUS Active

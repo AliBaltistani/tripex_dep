@@ -41,8 +41,8 @@ if ($sExtraInfoJsn != "") {
 
     
 	if (isset($extra->prices)) {
-		$pChild = $extra->prices->priceChild;
-		$pAdult = $extra->prices->priceAdult;
+		$pChild = $extra->prices->priceChild ?? '';
+		$pAdult = $extra->prices->priceAdult ?? '';
 		$pAdultL = $extra->prices->priceAdultL ?? '';
 		$pChildL = $extra->prices->priceChildL ?? '';
         $temp_SeatOp = (object) [
@@ -56,7 +56,7 @@ if ($sExtraInfoJsn != "") {
 	}
     
 	if (isset($extra->others)) {
-		$cLabel = strtolower($extra->others->categoryLabel);
+		$cLabel =  ($extra->others->categoryLabel) ?trim(strtolower($extra->others->categoryLabel)) : '';
 		$type = $extra->others->type ??  '';
 		$vCode = $extra->others->vehicleCode ?? '';
 		$tSlot = $extra->others->Totalslot ?? '';
@@ -175,6 +175,9 @@ if ($sExtraInfoJsn != "") {
                                 </div>
                             </div>
                             <?php 
+                            if($cLabel == DESERT){
+                                include 'edit-desertsafari.php';
+                            }  else 
                             if ($cLabel == ATTRACTION) { include('edit-attraction.php'); }
                                   else if ($cLabel == TRANSPORT) { include('edit-transport.php'); }
                               ?>

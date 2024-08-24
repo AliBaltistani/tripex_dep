@@ -1757,32 +1757,6 @@
                             <option value="private-transfers">Private Transfers</option>
                         </select>
                     </div>
-                    <!-- slot -->
-                    <div class="row mt-25">
-
-                        <?php
-                        if (strtolower($type) == "slot_PROGRESS") {
-                            echo ' <h6 class="mb-25">Select Slot (In Working ...)</h6>';
-                            $slt = json_decode($tSlot);
-                            // pre($slots);
-                            // die;
-                            $i = 0;
-                            foreach ($slt as $key => $s) {
-                                $i++; ?>
-                                <div class="col-3 mb-3 slot-wraper">
-                                    <input type="checkbox" class="slots" id="<?= $key; ?>" value="<?= $s ?>">
-                                    <label href="#0" data-price="<?= $s; ?>" class="btn btn-sm btn-info w-100 button_slots" for="<?= $key; ?>">
-                                        <strong><?= $key ?></strong><br>
-                                        <small style="font-size: x-small;"><i><?= $s . ' AED'; ?></i></small>
-                                    </label>
-                                </div>
-                        <?php }
-                        }
-
-                        ?>
-
-                    </div>
-                    <!-- endslot -->
                     <div class="booking-form-item-type mb-45">
                         <h6>Select Number Of Participant:</h6>
                         <div class="number-input-item adults">
@@ -1809,62 +1783,6 @@
                         <?php } else { ?>
                             <input name="quantity_child" id="quantity_input_child" type="hidden" class="quantity__input_disabled" min="0" value="0" required>
                         <?php  } ?>
-                        <?php if ($baby_seats) { ?>
-                            <hr>
-                            <div class="accordion" id="accordionBabySeat">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" for="baby_seat" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBsOne" aria-expanded="true" aria-controls="collapseBsOne">
-                                            <div class="children">
-                                                <!-- <input type="checkbox" name="baby_seat" id="baby_seat" value=""> -->
-                                                <label class="number-input-lable" for="baby_seat">Add Child/Baby Seats<span>
-                                            </div>
-                                        </button>
-                                    </h2>
-                                    <div id="collapseBsOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionBabySeat">
-                                        <div class="accordion-body">
-                                            <?php if ($babySeatOp->bsLabel[0]) {
-                                                $bsLen = count($babySeatOp->bsLabel);
-                                                $specialChar = array('`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', ';', ':', '"', "'", ',', '.', '<', '>', '/', '?', '|', '\\', " ");
-
-                                                for ($i = 0; $i < $bsLen; $i++) {
-
-                                                    $fl_babySeat = str_replace($specialChar, '_', strtolower($babySeatOp->bsLabel[$i]));
-                                            ?>
-                                                    <div class="number-input-item adults">
-                                                        <small style="line-height: normal;"><strong><?= $babySeatOp->bsLabel[$i] ?? '' ?></strong>
-                                                            <br> <small style="color: #aaa;"><?= $babySeatOp->bsAges[$i] ?? '' ?></small>
-                                                        </small>
-                                                        </span><small><?= $babySeatOp->bsPrice[$i] ?? '0'; ?> AED</small></span>
-                                                        <div class="quantity-counter" style="width: 100px;">
-                                                            <a href="javascript:void(0);" id="<?= 'quantity_minus_babySeat' . $i ?>" onclick="sub_baby_seat_price(this)" data-price="<?= $babySeatOp->bsPrice[$i] ?? '0'; ?>" data-input="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__minus_disabled"><i class="bi bi-dash"></i></a>
-                                                            <input type="text" name="babySeat_qty[<?= $fl_babySeat ?>]" data-id="babySeat_qty" style="padding: 0;" id="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
-                                                            <!--  'bs_qty_'.$fl_babySeat  -->
-                                                            <a href="javascript:void(0);" id="<?= 'quantity_plus_babySeat' . $i ?>" onclick="add_baby_seat_price(this)" data-price="<?= $babySeatOp->bsPrice[$i] ?? '0'; ?>" data-input="<?= 'quantity_input_babySeat_' . $i ?>" class="quantity__plus_disabled"><i class="bi bi-plus"></i></a>
-                                                        </div>
-
-                                                    </div>
-                                                <?php }
-                                            } else { ?>
-                                                <div class="number-input-item adults">
-                                                    <small style="line-height: normal;"><strong>Child/Baby Seat</strong>
-                                                        <br> <small style="color: #aaa;"></small>
-                                                    </small>
-                                                    </span><small> 25 AED</small></span>
-                                                    <div class="quantity-counter" style="width: 100px;">
-                                                        <a href="javascript:void(0);" id="<?= 'quantity_minus_babySeat0' ?>" onclick="sub_baby_seat_price(this)" data-price="25" data-input="<?= 'quantity_input_babySeat_0' ?>" class="quantity__minus_disabled"><i class="bi bi-dash"></i></a>
-                                                        <input type="text" name="babySeat_qty[baby_seat]" data-id="babySeat_qty" style="padding: 0;" id="<?= 'quantity_input_babySeat_0' ?>" class="quantity__input_disabled" min="0" max="<?= (int) $passengers; ?>" value="0" required>
-                                                        <a href="javascript:void(0);" id="<?= 'quantity_plus_babySeat0' ?>" onclick="add_baby_seat_price(this)" data-price="25" data-input="<?= 'quantity_input_babySeat_0' ?>" class="quantity__plus_disabled"><i class="bi bi-plus"></i></a>
-                                                    </div>
-
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                        <?php } ?>
                     </div>
 
                     <div class="booking-form-item-type">
@@ -1880,6 +1798,19 @@
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M23.999 5.44668L25.6991 7.4978L23.9991 9.54878H0V10.5743H23.1491L20.0135 14.3575L20.7834 14.9956L26.7334 7.81687L26.9979 7.4978L26.7334 7.17873L20.7834 0L20.0135 0.638141L23.149 4.42114H0V5.44668H23.999Z" />
                             </svg>
                             <div class="total" id="total_price_adult"><?= $pAdult . " AED"; ?></div>
+                        </div>
+                        <div class="single-total mb-30">
+                            <span>Child</span>
+                            <ul>
+                                <li><strong><?= $pChild . " AED"; ?></strong> PRICE</li>
+                                <li><i class="bi bi-x-lg"></i></li>
+                                <li><strong id="quantity_span_child">01</strong> QTY</li>
+
+                            </ul>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="15" viewBox="0 0 27 15">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M23.999 5.44668L25.6991 7.4978L23.9991 9.54878H0V10.5743H23.1491L20.0135 14.3575L20.7834 14.9956L26.7334 7.81687L26.9979 7.4978L26.7334 7.17873L20.7834 0L20.0135 0.638141L23.149 4.42114H0V5.44668H23.999Z" />
+                            </svg>
+                            <div class="total" id="total_price_child"><?= $pChild . " AED"; ?></div>
                         </div>
 
                     </div>
@@ -1989,11 +1920,11 @@
 <script>
     // $(document).ready(function() {
 
-        var adultPrice = <?= $pAdult; ?> // Price for each adult
-        var adultPriceTotal = <?= $pAdult; ?> // Price for each adult
-        var childPriceTotal = <?= $pAdult; ?> // Price for each adult
-        var childPrice = <?= $pChild; ?>; // Price for each child
-        var total_capacity = <?= $passengers; ?>; // Price for each child
+        var adultPrice = '<?php echo $pAdult; ?>' // Price for each adult
+        var adultPriceTotal = '<?php echo $pAdult; ?>' // Price for each adult
+        var childPriceTotal = '<?php echo  $pChild; ?>' // Price for each adult
+        var childPrice = '<?php echo  $pChild; ?>'; // Price for each child
+        var total_capacity = '<?php echo  $passengers; ?>'; // Price for each child
         var numAdults = 0;
         var numChildren = 0;
         var totalPrice = 0;
@@ -2004,7 +1935,6 @@
 
         // Function to update total price
         function updateTotalPrice() {
-            numChildren =  $('[data-id="babySeat_qty"]').val();
             totalPrice = parseFloat(totalBsPrice) + ((parseInt(numAdults) * parseInt(adultPrice)) + ((parseInt(numChildren) * parseInt(childPrice))));
             const typeTrs = $('#transfer_option').find(':selected').val();
             if(typeTrs.trim() == 'private-transfers' && (numAdults > 0 || numChildren > 0) ){
@@ -2090,75 +2020,51 @@
             }
         });
 
-        function add_baby_seat_price(vls){
-            let bsPrice = $(vls).data('price');
-            let inputId = $(vls).data('input');
-            let inpVl = $("#"+inputId).val();
-            inpVl = parseInt(inpVl);
-            if (inpVl < total_capacity) {
-            $("#"+inputId).val((inpVl + 1));
-            totalBsPrice = totalBsPrice + bsPrice;
-            updateTotalPrice();
-            }
-        }
-
-  function sub_baby_seat_price(vls){
-    let bsPrice = $(vls).data('price');
-     let inputId = $(vls).data('input');
-     let inpVl = $("#"+inputId).val();
-     inpVl = parseInt(inpVl);
-     if (inpVl > 0) {
-       $("#"+inputId).val((inpVl - 1));
-       totalBsPrice = totalBsPrice - bsPrice;
-
-       updateTotalPrice();
-
-      }
-    }
+ 
         // Add child
-        // $("#quantity_minus_child").click(function(e) {
+        $("#quantity_minus_child").click(function(e) {
 
-        //     e.preventDefault();
-        //     quantitychild = $("#quantity_input_child").val();
-        //     if (quantitychild > 0) {
-        //         value = parseInt(quantitychild)
-        //         $("#quantity_input_child").val((value - 1));
-        //     }
-        //     quantitychild = $("#quantity_input_child").val();
+            e.preventDefault();
+            quantitychild = $("#quantity_input_child").val();
+            if (quantitychild > 0) {
+                value = parseInt(quantitychild)
+                $("#quantity_input_child").val((value - 1));
+            }
+            quantitychild = $("#quantity_input_child").val();
 
-        //     if (quantitychild <= 0) {
-        //         numChildren = 0;
-        //     } else {
-        //         numChildren = quantitychild
-        //     }
+            if (quantitychild <= 0) {
+                numChildren = 0;
+            } else {
+                numChildren = quantitychild
+            }
 
-        //     updateTotalPrice();
-        //     $("#quantity_span_child").text(quantitychild);
-        //     updateTotalPriceChild();
-        // });
+            updateTotalPrice();
+            $("#quantity_span_child").text(quantitychild);
+            updateTotalPriceChild();
+        });
 
         // add child
-        // $("#quantity_plus_child").click(function(e) {
-        //     e.preventDefault();
-        //     quantitychild = $("#quantity_input_child").val();
-        //     value = parseInt(quantitychild)
-        //     $("#quantity_input_child").val((value + 1));
-        //     quantitychild = $("#quantity_input_child").val();
+        $("#quantity_plus_child").click(function(e) {
+            e.preventDefault();
+            quantitychild = $("#quantity_input_child").val();
+            value = parseInt(quantitychild)
+            $("#quantity_input_child").val((value + 1));
+            quantitychild = $("#quantity_input_child").val();
 
-        //     if (quantitychild >= 0) {
-        //         numChildren = quantitychild
-        //     } else {
-        //         numChildren = 0;
-        //     }
-        //     if (quantitychild > 0) {
-        //         ;
+            if (quantitychild >= 0) {
+                numChildren = quantitychild
+            } else {
+                numChildren = 0;
+            }
+            if (quantitychild > 0) {
+                ;
 
-        //         updateTotalPrice();
+                updateTotalPrice();
 
-        //         $("#quantity_span_child").text(quantitychild);
-        //         updateTotalPriceChild();
-        //     }
-        // });
+                $("#quantity_span_child").text(quantitychild);
+                updateTotalPriceChild();
+            }
+        });
 
         // 		baby Seat price add
         // $("#baby_seat").click(function() {

@@ -80,7 +80,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="role">Select <?= ucfirst($categoryInfo->categoryLabel); ?> <span style="color: red;">*</span></label>
+                                    <label for="role">Select Category <span style="color: red;">*</span></label>
                                     <select class="form-control required" id="subcatId" name="subcatId" required>
                                         <option value="">Select Category  </option>
                                         <?php foreach ($subcategoryInfo as $single) {  ?>
@@ -91,9 +91,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <?php if ($categoryInfo->categoryLabel == "attraction") {
+                            <?php
+                            $catlabel = $categoryInfo->categoryLabel ? trim($categoryInfo->categoryLabel): '';
+                            if($catlabel == DESERT){
+                                include 'add-desertsafari.php';
+                            }  else if ($catlabel == ATTRACTION) {
                                 include 'add-attraction.php';
-                                } else if ($categoryInfo->categoryLabel == TRANSPORT) {
+                                } else if ($catlabel == TRANSPORT) {
                                     include 'add-transport.php';
                                 }
                             ?>

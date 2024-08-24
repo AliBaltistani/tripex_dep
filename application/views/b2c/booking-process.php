@@ -86,7 +86,7 @@
 			   $babySeatOp  = json_decode($extra->prices->babySeats ?? json_encode($temp_SeatOp));
 		}
 		if (isset($extra->others)) {
-			$cLabel = strtolower($extra->others->categoryLabel);
+			$cLabel =  $extra->others->categoryLabel ? trim(strtolower($extra->others->categoryLabel)) : '';
 			$type = $extra->others->type;
 			$tSlot = $extra->others->Totalslot;
 			$inclusion = $extra->others->inclusion;
@@ -364,10 +364,8 @@
 			</div>
 			<div class="col-xl-4"  id="booking-form">
 				<?php 
-				 if(strpos(strtolower($subcatName), 'desert')){
-					
-					include('desert_booking.php');
-									 }
+				 if($cLabel == DESERT){
+					include('desert_booking.php');}
 				else if($cLabel == ATTRACTION)
 				{ include('attraction_booking.php'); }
 				else if($cLabel == TRANSPORT) 
