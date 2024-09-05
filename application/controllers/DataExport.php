@@ -258,7 +258,7 @@ class DataExport extends BaseController{
 			// $dompdf->output($file_path);
         // Output the PDF to a file
         // if($this->pdf->output($file_path)){
-		// 	return base_url().'uploads/booking_pdfs/'.$file_name;
+			return base_url().'uploads/booking_pdfs/'.$file_name;
 		// }else{
 		// 	return false;
 		// }
