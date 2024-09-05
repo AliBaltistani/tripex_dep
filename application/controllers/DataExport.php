@@ -193,10 +193,10 @@ class DataExport extends BaseController{
 			// Output the PDF to a file
 			$pdf->output($file_path);
 	
-			echo 'PDF saved successfully to ' . $file_path;
+			// echo 'PDF saved successfully to ' . $file_path;
            
 
-			echo '<pre>'; print_r($data); die;
+			// echo '<pre>'; print_r($data); die;
            // ====== WORK IN PROGRESS ===========
          
             // $this->send_booking_to_supplier($file_pdf);
@@ -235,14 +235,16 @@ class DataExport extends BaseController{
 		if(!$html){
 			return false;
 		}
+
+		$dompdf = new Dompdf();
         // Load the HTML content
-        $this->pdf->loadHtml($html);
+        $dompdf->loadHtml($html);
 
         // (Optional) Set paper size and orientation
-        $this->pdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A4', 'portrait');
 
         // Render the PDF
-        $this->pdf->render();
+        $dompdf->render();
 
         $file_path = './uploads/booking_pdfs/'.$file_name;
 
@@ -250,13 +252,16 @@ class DataExport extends BaseController{
 			if (!is_dir('./uploads/booking_pdfs/')) {
 				mkdir('./uploads/booking_pdfs', 0755, true);
 			}
-
+			
+			
+			$dompdf->stream($file_name, ['Attachment' => 1]);
+			// $dompdf->output($file_path);
         // Output the PDF to a file
-        if($this->pdf->output($file_path)){
-			return base_url().'uploads/booking_pdfs/'.$file_name;
-		}else{
-			return false;
-		}
+        // if($this->pdf->output($file_path)){
+		// 	return base_url().'uploads/booking_pdfs/'.$file_name;
+		// }else{
+		// 	return false;
+		// }
     }
 	
     
