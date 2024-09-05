@@ -28,31 +28,9 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="role">Role</label>
-                    <select class="form-control required" id="role" name="role">
-                        <option value="0">Select Role</option>
-                        <?php
-                        if (!empty($roles)) {
-                            foreach ($roles as $rl) {
-                                $roleText = $rl->role;
-                                $roleClass = false;
-                                if ($rl->roleStatus == INACTIVE) {
-                                    $roleText = $rl->role . ' (Inactive)';
-                                    $roleClass = true;
-                                }
-                        ?>
-                                <option value="<?php echo $rl->roleId ?>" 
-                                <?php if ($roleClass) {
-                                        echo "class=text-warning";
-                                    }
-                                    if ($rl->roleId == set_value('role')) {
-                                        echo "selected=selected";
-                                    } ?>><?= $roleText ?></option>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </select>
+                <label for="mobile">Vehicle Details</label>
+                <input type="text" class="form-control required" id="vehicle_code" value="<?php echo set_value('vehicle_code'); ?>" name="vehicle_code" >
+                    <input type="hidden" name="role" id="role" value="<?php echo $role->roleId; ?>" >
                 </div>
             </div>
 
@@ -61,15 +39,15 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="password">Create Password</label>
-                    <input type="password" class="form-control required" id="password" name="password" maxlength="20">
+                    <!-- <label for="password">Create Password</label> -->
+                    <input type="hidden" class="form-control required" id="password" name="password" value="sp123456" maxlength="20">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="cpassword">Confirm Password</label>
-                    <input type="password" class="form-control required equalTo" id="cpassword" name="cpassword" maxlength="20">
+                    <!-- <label for="cpassword">Confirm Password</label> -->
+                    <input type="hidden" class="form-control required equalTo" id="cpassword" name="cpassword" value="sp123456" maxlength="20">
                 </div>
             </div>
 

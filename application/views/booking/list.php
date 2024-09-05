@@ -1,4 +1,3 @@
-
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -39,7 +38,7 @@
     <div class="row">
       <div class="col-xs-12 text-right">
         <div class="form-group">
-        <?php if((check_permission('Booking','create_records') == 1)){ ?>
+          <?php if ((check_permission('Booking', 'create_records') == 1)) { ?>
             <button type="button" id="slotcount" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
               <i class="fa fa-plus"></i> New Booking
             </button>
@@ -71,7 +70,7 @@
         <?php } ?>
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12" id="js_message">
             <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
           </div>
         </div>
@@ -99,82 +98,109 @@
 
           <div class="box-body table-responsive no-padding">
 
+            <style>
+              th,
+              td,
+              span {
+                padding: 0px 20px;
+              }
+            </style>
             <table class="table table-hover">
-
               <tr>
                 <th>sr.#</th>
-                <th>Ref No</th>
-                <th>Service</th>
-                <th>Booking Date</th>
+                <th>Booking Ref#</th>
+                <th>Staff</th>
+                <th>Agent</th>
+                <th>Date</th>
                 <th>Guest Name</th>
-                <th>Supplier Name</th>
-                <th>Total Price</th>
-                <th>Status</th>
+                <th>Guest Contact#</th>
+                <th>Tour</th>
+                <th>Type</th>
+                <th>Add Service</th>
+                <th>Adult</th>
+                <th>Child</th>
+                <th>Pickup Time</th>
+                <th>Pickup Location</th>
+                <th>Drop Off Location</th>
+                <th>Supplier</th>
+                <th>Vehicle Details</th>
+                <th>Cost</th>
+                <th>Sale</th>
 
                 <th class="text-center">Actions</th>
               </tr>
-             
+
               <?php
-            
+
               if (!empty($records)) {
+                // pre($records); die;
                 $count = 1;
                 foreach ($records as $record) {
               ?>
-                  <tr style="height:10px; <?= (isUnreadBooking($record->bookingId)? 'background:palegoldenrod;': '') ?> " >
+                  <tr style="height:10px; <?= (isUnreadBooking($record->bookingId) ? 'background:palegoldenrod;' : '') ?> ">
                     <td><?php echo $count++ ?></td>
-                    <td style="overflow: hidden;width: 10px;"><?php echo $record->bRefNo ?></td>
-                    
-                      <td><?= substr($record->bAddService,0,10) ?>...</td>
-
-                    <td><?php echo $record->bDate ?></td>
-                    <td><?php echo $record->bGuestName . "<br>(" . $record->bGuestContact . ")" ?></td>
-                    <td  ><?php
-                        $suplier = "<i><u>Unknown!</u></i>";
-                        foreach ($suppliers as $sup) {
-                          if ($sup->userId == $record->bSupplierId) {
-                            $suplier = $sup->name . "<br>(" . $sup->mobile . ")";
-                          }
-                        }
-                        echo $suplier;
-                        ?></td>
-                    <td><?php echo $record->totalPrice ?> AED</td>
-                    <td  >
-                      <?php
-                        if ($record->status == ACTIVE) {
-                        ?> <span class="label label-success">Confirmed</span>
-                      <?php } else if ($record->status == CANCEL) {
-                        ?> <span class="label label-danger">Canceled</span>
-                      <?php } else { ?>
-                         <span class="label label-warning">Pending</span>
-                      <?php } ?>
+                    <td style="overflow: hidden;width: 10px;"><span><?php echo $record->bRefNo ?></td>
+                    <td><span> <?php echo $record->bStaff; ?></span></td>
+                    <td><span> <?php echo $record->bAgent; ?></span></td>
+                    <td><span> <?php echo $record->bDate ?></span></td>
+                    <td><span> <?php echo $record->bGuestName ?></span></td>
+                    <td><span> <a href="tel:<?php echo $record->bGuestContact ?>"><?php echo $record->bGuestContact ?></a></span></td>
+                    <td><span> <?php echo $record->bTour ?></span></td>
+                    <td><span> <?php echo $record->bType ?></span></td>
+                    <td><span> <?php echo substr($record->bAddService, 0, 5) ?>..</span></td>
+                    <td><span> <?php echo $record->bAdult ?></span></td>
+                    <td><span> <?php echo $record->bChild ?></span></td>
+                    <td><span> <?php echo $record->bPickupTime ?></span></td>
+                    <td><span> <?php echo $record->bPickLoc ?></span></td>
+                    <td><span> <?php echo $record->bDropLoc ?></span></td>
+                    <td><span>
+                        <select class="form-control " onchange="ex_supplier_save(this)" id="ex_supplier_select" name="ex_supplier_select" style="width:200px;">
+                          <option data-bookingid="" data-vehicle="" value="">--- Select supplier ---</option>
+                          <?php foreach ($suppliers as $sup) {
+                            $selected = ($sup->supid == $record->bSupplierId) ? 'selected' : '';
+                          ?>
+                            <option <?php echo $selected; ?>
+                              data-vtdid="<?php echo 'vehicle-js_' . $count; ?>"
+                              data-bookingid="<?php echo $record->bookingId; ?>"
+                              data-vehicle="<?php echo $sup->vehicle; ?>"
+                              value="<?= $sup->supid ?>">
+                              <?= $sup->name . "<a href='tel:" . $sup->mobile . "'>(" . $sup->mobile . ") </a>" ?>
+                            </option>
+                          <?php } ?>
+                        </select>
+                      </span>
                     </td>
-                    <td class="text-center">
+                    <td id="<?php echo 'vehicle-js_' . $count; ?>"><span><?php echo $record->bVehicle; ?></span></td>
+                    <td><span><input type="text" name="" onchange="updateBookingCost(this)" data-bookingid="<?php echo $record->bookingId; ?>"  id="" value="<?php echo $record->bCost; ?>"></span></td>
+                    <td><span><?php echo $record->bSale; ?></span></td>
 
-                    <?php if((check_permission('Suppliers','create_records') == 1)){ ?>
+                    <td class="text-center" style="display: flex;">
+
+                      <!-- <?php if ((check_permission('Suppliers', 'create_records') == 1)) { ?>
                         <a href="#" onclick="getID(<?= $record->bookingId ?>,<?= $record->bSupplierId ?>)" class="btn  <?= ($record->bSupplierId) ? 'btn-success' : 'btn-primary'; ?>" data-toggle="modal" data-target="#supplierModal" title="Add Supplier">
                           <i class="fa <?= ($record->bSupplierId) ? 'fa-minus' : 'fa-plus'; ?> "></i>
                         </a> |
+                      <?php } ?> -->
+
+                      <!-- <a class="btn btn-sm btn-info" href="<?php echo base_url() . 'booking/view-more?serId=' . $record->bookingId . "&nid=" . getUnreadId($record->bookingId); ?> " title="View More"><i class="fa fa-eye"></i></a> | -->
+
+
+                      <?php if ((check_permission('Booking', 'edit_records') == 1)) { ?>
+                        <a class="btn btn-sm btn-warning" href="<?php echo base_url() . 'booking/edit-booking?bid=' . $record->bookingId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                        |
                       <?php } ?>
 
-                      <a class="btn btn-sm btn-info" href="<?php echo base_url() . 'booking/view-more?serId=' . $record->bookingId."&nid=".getUnreadId($record->bookingId); ?> " title="View More"><i class="fa fa-eye"></i></a> |
-
-                      
-                      <?php if((check_permission('Booking','edit_records') == 1)){ ?>
-                        <a class="btn btn-sm btn-warning" href="<?php echo base_url() . 'booking/edit-booking?bid=' . $record->bookingId; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                      |
-                        <?php } ?>
-
-                      <?php if((check_permission('Booking','delete_records') == 1)){ ?>
+                      <?php if ((check_permission('Booking', 'delete_records') == 1)) { ?>
                         <a class="btn btn-sm btn-danger deletecommon" href="#" data-taskname="booking" data-col="bookingId" data-taskid="<?php echo $record->bookingId; ?>" title="Delete"><i class="fa fa-trash"></i></a>
-                         |
-                        <?php } ?>
+                        |
+                      <?php } ?>
 
-                      <?php if((check_permission('Booking','total_access') == 1)){ ?>
-                        
-                        <br style="margin: 5px 0;" >
-                        <hr style="margin: 5px 0;" >
-                        <a class="btn btn-sm btn-success  "  href="<?= base_url('b2c/booking/process-checkout?bid='.$record->bookingId) ?>" title="Payment Request">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 27 27">
+                      <?php if ((check_permission('Booking', 'total_access') == 1)) { ?>
+
+                        <br style="margin: 5px 0;">
+                        <hr style="margin: 5px 0;">
+                        <a class="btn btn-sm btn-success  " href="<?= base_url('b2c/booking/process-checkout?bid=' . $record->bookingId) ?>" title="Payment Request">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 27 27">
                             <g clip-path="url(#clip0_2102_235)">
                               <path d="M9.84668 19.8136V25.0313C9.84754 25.2087 9.90418 25.3812 10.0086 25.5246C10.1129 25.6679 10.2598 25.7748 10.4283 25.8301C10.5968 25.8853 10.7784 25.8861 10.9474 25.8324C11.1164 25.7787 11.2642 25.6732 11.3699 25.5308L14.4221 21.3773L9.84668 19.8136ZM26.6486 0.156459C26.5218 0.0661815 26.3725 0.0127263 26.2173 0.00200482C26.062 -0.00871662 25.9068 0.0237135 25.7688 0.0957086L0.456308 13.3145C0.310668 13.3914 0.190668 13.5092 0.111035 13.6535C0.0314025 13.7977 -0.00439878 13.962 0.00802526 14.1262C0.0204493 14.2905 0.0805582 14.4475 0.180975 14.5781C0.281392 14.7087 0.417748 14.8071 0.573308 14.8613L7.61018 17.2666L22.5963 4.45283L10.9998 18.4242L22.7932 22.4551C22.9102 22.4944 23.0344 22.5077 23.1571 22.4939C23.2798 22.4802 23.398 22.4399 23.5034 22.3757C23.6089 22.3115 23.699 22.225 23.7676 22.1223C23.8361 22.0196 23.8814 21.9032 23.9002 21.7812L26.9939 0.968709C27.0168 0.81464 26.9967 0.657239 26.9357 0.513898C26.8748 0.370556 26.7754 0.246854 26.6486 0.156459Z"></path>
                             </g>
@@ -182,17 +208,17 @@
                         </a> |
 
                         <a class="btn btn-sm " style="background-color:yellowgreen;" href="<?php echo base_url() . 'booking/confirm-booking?bid=' . $record->bookingId . "&spId=" . $record->bSupplierId; ?>" title="Confirm Booking">
-                        <i class="fa fa-heart"></i>
+                          <i class="fa fa-heart"></i>
                         </a> |
                         <a class="btn btn-sm btn-danger btn-outline " href="<?php echo base_url() . 'booking/cancel-booking?bid=' . $record->bookingId ?>" title="Cancel Booking">
-                        <i class="fa fa-close text-danger"></i>
+                          <i class="fa fa-close text-danger"></i>
                         </a>
                       <?php } ?>
                     </td>
                   </tr>
               <?php
                 }
-              }else{
+              } else {
                 echo '<tr ><td class="text-center py-4" colspan="9">No booking records found...</td></tr>';
               }
               ?>
@@ -236,7 +262,7 @@
                 <li>
                   <div class="form-group ">
                     <br>
-                    <select class="form-control  required" style="width: 50%; margin:auto;" id="ex_supplier_select" name="ex_supplier_select" required>
+                    <select class="form-control  required" style="width: 50%; margin:auto;" id="ex_supplier_select1" name="ex_supplier_select" required>
                       <option value="" selected>--- Select supplier ---</option>
                       <?php foreach ($suppliers as $sup) { ?>
                         <option value="<?= $sup->userId ?>"><?= $sup->name . " (" . $sup->mobile . ")" ?></option>
@@ -327,38 +353,50 @@
     });
   }
 
-  function ex_supplier_save() {
+  function ex_supplier_save(tag) {
 
-    const ex_supplier = $("#ex_supplier_select").val();
+    const ex_supplier = $(tag).find(':selected').val();
+    const bookingId = $(tag).find(':selected').data('bookingid');
+    const vehicle = $(tag).find(':selected').data('vehicle') ?? '';
+    let vtdid = "#" + $(tag).find(':selected').data('vtdid') ?? '';
 
-
+    if (vehicle == null || vehicle == undefined || vehicle == '') {
+      if (!confirm("This supplier has no vehicle details. Please update the vehicle details before submitting. Do you want to proceed?")) {
+        return;
+      }
+    }
     if (ex_supplier != "" && bookingId != 0) {
+
       $.ajax({
         type: 'POST',
         url: '<?= base_url() ?>Booking/addExSupplier',
         data: {
           id: bookingId,
-          sid: ex_supplier
+          sid: ex_supplier,
+          vehicle: vehicle
         },
         dataType: 'json',
         beforeSend: function() {
-          $('#ex_supplier_save').html('loading...');
+          $(tag).attr('disabled', 'disabled');
         },
         success: function(response) {
+          $(tag).removeAttr('disabled');
           if (response.status = true) {
 
             $('#ex_supplier_save').html('Saved');
-            window.location.href = '<?= base_url() ?>booking';
-            alert("Supplier successfully Added");
+            $('#js_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Supplier Updated for this booking</div>')
+            $(vtdid).html('<span>' + vehicle + '</span>');
+            // window.location.href = '<?= base_url() ?>booking';
 
           } else if (response.status = false) {
-            alert("Supplier Creation failed");
+            $('#js_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Supplier Updated failed.</div>')
           } else {
             alert("Access denied..!");
           }
 
         },
         error: function(xhr, status, error) {
+          $(tag).removeAttr('disabled');
           alert(xhr.responseText);
           console.error(xhr.responseText);
         }
@@ -366,10 +404,62 @@
     } else {
       alert('Invalid Information...');
     }
-    // const bookingId = bid;
-    // const supplierId = spid;
 
   }
+
+  function updateBookingCost(el) {
+
+    const bkid = $(el).data('bookingid');
+    const cost = $(el).val();
+    if ( isNumeric(cost) == false) {
+      alert('The cost value must be a number');
+      return;
+    }
+    if (isNumeric(bkid) == false ) {
+      alert('Error!. Missing Booking Information. ');
+      return;
+    }
+    if (cost != "" && bkid != 0) {
+      $.ajax({
+        type: 'POST',
+        url: '<?= base_url() ?>Booking/updateBookingCost',
+        data: {
+          id: bkid,
+          cost: cost,
+        },
+        dataType: 'json',
+        beforeSend: function() {
+          $(el).attr('disabled', 'disabled');
+        },
+        success: function(response) {
+          $(el).removeAttr('disabled');
+          if (response.status = true) {
+            $('#ex_supplier_save').html('Saved');
+            $('#js_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Cost updated successfully</div>')
+            // window.location.href = '<?= base_url() ?>booking';
+
+          } else if (response.status = false) {
+            $('#js_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Cost Updated failed.</div>')
+          } else {
+            alert("Access denied..!");
+          }
+
+        },
+        error: function(xhr, status, error) {
+          $(el).removeAttr('disabled');
+          alert(xhr.responseText);
+          console.error(xhr.responseText);
+        }
+      });
+    } else {
+      alert('Invalid Information...');
+    }
+
+  }
+
+  var isNumeric = function(num){
+    return (typeof(num) === 'number' || typeof(num) === "string" && num.trim() !== '') && !isNaN(num);  
+}
 </script>
 
 

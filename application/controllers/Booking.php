@@ -633,7 +633,10 @@ class Booking extends BaseController
             echo json_encode(array('status' => FALSE));
         }else{
             $data['bSupplierId'] = $_REQUEST['sid'];
+            $data['bVehicle'] = $_REQUEST['vehicle'];
             $booking_id = $_REQUEST['id'];
+            
+            // pre($data);
 
             $this->load->model('Booking_model');
             $result = $this->Booking_model->editBooking($data, $booking_id);
@@ -644,6 +647,25 @@ class Booking extends BaseController
                 echo json_encode(array('status' => FALSE));
             }
         }
+    }
+
+    public function updateBookingCost()
+    {
+            $data['bCost'] = $_REQUEST['cost'] ?? '';
+            $booking_id = $_REQUEST['id'] ?? '';
+            if($data['bCost'] == '' || $booking_id == '' ) 
+            {
+                echo json_encode(array('status' => FALSE)); exit;
+            }  
+
+            $this->load->model('Booking_model');
+            $result = $this->Booking_model->editBooking($data, $booking_id);
+            if ($result != 0) {
+                echo json_encode(array('status' => TRUE));
+            } else {
+                echo json_encode(array('status' => FALSE));
+            }
+        
     }
 
     public function updateTransaction()

@@ -3,6 +3,7 @@ $userId = $userInfo->userId ?? '';
 $name = $userInfo->name ?? '';
 $email = $userInfo->email ?? '';
 $mobile = $userInfo->mobile ?? '';
+$vehicle_code = $userInfo->vehicle ?? '';
 $roleId = $userInfo->roleId ?? '';
 $isAdmin = $userInfo->isAdmin ?? '';
 ?>
@@ -35,44 +36,21 @@ $isAdmin = $userInfo->isAdmin ?? '';
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="role">Role</label>
-                    <select class="form-control" id="role" name="role">
-                        <option value="0">Select Role</option>
-                        <?php
-                        if (!empty($roles)) {
-                            foreach ($roles as $rl) {
-                                $roleText = $rl->role;
-                                $roleClass = false;
-                                if ($rl->roleStatus == INACTIVE) {
-                                    $roleText = $rl->role . ' (Inactive)';
-                                    $roleClass = true;
-                                }
-                        ?>
-                                <option value="<?php echo $rl->roleId; ?>" <?php if ($roleClass) {
-                                                                                echo "class=text-warning";
-                                                                            } ?> <?php if ($rl->roleId == $roleId) {
-                                                                                        echo "selected=selected";
-                                                                                    } ?>><?= $roleText ?></option>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </select>
+                <label for="mobile">Vehicle Details</label>
+                <input type="text" class="form-control required" id="vehicle_code" value="<?php echo $vehicle_code; ?>" name="vehicle_code" >
+                    <input type="hidden" name="role" id="role" value="<?php echo $roleId; ?>" >
                 </div>
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" maxlength="20">
+                    <input type="hidden" class="form-control" id="password" value="sp123456" placeholder="Password" name="password" maxlength="20">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="cpassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password" name="cpassword" maxlength="20">
+                    <input type="hidden" class="form-control" id="cpassword" value="sp123456" placeholder="Confirm Password" name="cpassword" maxlength="20">
                 </div>
             </div>
 

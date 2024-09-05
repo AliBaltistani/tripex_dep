@@ -2,7 +2,7 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
-require APPPATH .'/vendor/autoload.php';
+require FCPATH .'/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

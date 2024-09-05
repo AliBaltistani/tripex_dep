@@ -63,7 +63,7 @@ class Supplier_model extends CI_Model
 
     function get_suppliers_only()
     {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile');
+        $this->db->select('BaseTbl.userId AS supid, vehicle, BaseTbl.email, BaseTbl.name, BaseTbl.mobile');
         $this->db->from('tbl_users as BaseTbl');
         $this->db->where('BaseTbl.isDeleted', 0);
         $this->db->where('BaseTbl.isAdmin', SUPPLIER_USER);

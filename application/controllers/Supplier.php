@@ -68,8 +68,7 @@ class Supplier extends BaseController
             $this->loadThis();
         } else {
            
-            $data['roles'] = $this->Role_model->getUserRoles();
-
+            $data['role'] = $this->Role_model->getRow(['role_type' => SUPPLIER_USER]);
             $this->global['pageTitle'] = WEB_NAME . ' : Add New Supplier';
 
             $this->loadViews("suppliers/add", $this->global, $data, NULL);
@@ -98,16 +97,17 @@ class Supplier extends BaseController
             }
             else
             {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $name = ucwords(strtolower(($this->input->post('fname'))));
+                $email = strtolower(($this->input->post('email')));
                 $password = $this->input->post('password');
                 $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $mobile = ($this->input->post('mobile'));
+                $vehicle = ($this->input->post('vehicle_code'));
                 $isAdmin = $this->input->post('isAdmin');
                 $bookingId = $this->input->post('bookingId');
                 
                 $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId,
-                        'name'=> $name, 'mobile'=>$mobile, 'isAdmin'=>$isAdmin,
+                        'name'=> $name, 'mobile'=>$mobile, 'vehicle'=>$vehicle, 'isAdmin'=>$isAdmin,
                         'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
                 
                 // pre($userInfo);
@@ -170,24 +170,26 @@ class Supplier extends BaseController
             }
             else
             {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $name = ucwords(strtolower(($this->input->post('fname'))));
+                $email = strtolower(($this->input->post('email')));
                 $password = $this->input->post('password');
                 $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $mobile = ($this->input->post('mobile'));
+                $vehicle = $this->input->post('vehicle_code');
                 $isAdmin = $this->input->post('isAdmin');
                 
                 $userInfo = array();
                 
                 if(empty($password))
                 {
-                    $userInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name, 'mobile'=>$mobile,
-                        'isAdmin'=>$isAdmin, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+                    $userInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name, 'mobile'=>$mobile, 
+                    'vehicle' => $vehicle, 'isAdmin'=>$isAdmin, 'updatedBy'=>$this->vendorId,
+                     'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
                 else
                 {
                     $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId,
-                        'name'=>ucwords($name), 'mobile'=>$mobile, 'isAdmin'=>$isAdmin, 
+                        'name'=>ucwords($name), 'mobile'=>$mobile,'vehicle' => $vehicle, 'isAdmin'=>$isAdmin, 
                         'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
                 
