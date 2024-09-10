@@ -1812,8 +1812,12 @@
                             </svg>
                             <div class="total" id="total_price_child"><?= $pChild . " AED"; ?></div>
                         </div>
-
+                        <div class="form-inner mb-20">
+                            <label>Review/ Note:</label>
+                            <textarea name="sp_note" row="10" col="5" placeholder="Write a review/note here. (if any)"></textarea>
+                        </div>
                     </div>
+                    
                     <input type="hidden" name="price_total" id="totalPrice_hidden" value="0">
                     <input type="hidden" name="price_child" id="" value="<?= $pChild; ?>">
                     <input type="hidden" name="price_adult" id="" value="<?= $pAdult; ?>">

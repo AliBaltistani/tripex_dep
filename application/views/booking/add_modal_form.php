@@ -150,7 +150,10 @@ if (!empty($records)) {
                     </div>
                 </div>
             <!-- Booking column -->
-            <?php if ($cLabel == ATTRACTION) {
+            <?php 
+            if ($cLabel == DESERT) {
+                require_once('desert_form.php');
+            }else if ($cLabel == ATTRACTION) {
                 require_once('attration_form.php');
             } else if ($cLabel == TRANSPORT) {
                 require_once('transport_form.php');

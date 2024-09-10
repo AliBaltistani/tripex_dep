@@ -96,7 +96,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="totalPriceInput"> Total Price (AED) </label>
-                                        <input type="number" class="form-control required" value="<?= $totalPrice; ?>" id="totalPriceInput" name="totalPriceInput" min="0.00" readonly required />
+                                        <input type="number" class="form-control required" value="<?= $totalPrice; ?>" id="totalPriceInput" name="totalPriceInput" min="0.00" required />
                                     </div>
                                 </div>
                                 <div class="col-md-3">

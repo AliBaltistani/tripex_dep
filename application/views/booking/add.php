@@ -129,7 +129,10 @@ if (!empty($records)) {
                 </div>
             </div>
             <!-- Booking column -->
-            <?php if ($cLabel == ATTRACTION) {
+            <?php 
+            if ($cLabel == DESERT) {
+                include('desert_form.php');
+            } else if ($cLabel == ATTRACTION) {
                 include('attration_form.php');
             } else if ($cLabel == TRANSPORT) {
                 include('transport_form.php');

@@ -1689,11 +1689,10 @@
     <div class="sidebar-booking-form">
 
       <div class="form-inner mb-20">
-        <label>Vehicle Code <span>*</span></label>
+        <!-- <label>Vehicle Code <span>*</span></label> -->
         <input type="hidden" name="tourType" value="<?= $type; ?>" placeholder="tour Type">
         <input type="hidden" name="slot_no" value="NULL" placeholder="slotno">
-        <input type="text" name="vehicle_code" value="<?= (set_value('vehicle_code')) ? set_value('vehicle_code') : $vCode; ?>" placeholder="vehicle code">
-        <?= '<small>' . $this->form_validation->error('vehicle_code') . '</small>' ?>
+        <input type="hidden" name="vehicle_code" value="<?= (set_value('vehicle_code')) ? set_value('vehicle_code') : $vCode; ?>" placeholder="vehicle code">
       </div>
       <div class="form-inner mb-20">
         <label>Lead Name <span>*</span></label>

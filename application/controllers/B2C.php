@@ -327,11 +327,10 @@ class B2C extends BaseControllerFrontend
               'driver_notes' =>$_POST['sp_note'] ?? '',
             );
 
-
             $data['serviceId'] =  $id;
             $data['bRefNo'] =  $uniqueRefNo;
-            $data['bStaff'] =  "COMPANY";
-            $data['bAgent'] = "Online Booking";
+            $data['bStaff'] =  array_key_exists('name',$_SESSION) ? $_SESSION['name'] :  "Online";
+            $data['bAgent'] =  array_key_exists('roleText',$_SESSION) ? $_SESSION['roleText'] :  "COMPANY";
             $data['bDate'] = $bookingDate;
             $data['bGuestName'] = $this->security->xss_clean($this->input->post('customer_name'));
             $data['bGuestContact'] = $this->security->xss_clean($this->input->post('customer_number'));

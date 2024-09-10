@@ -94,7 +94,12 @@ class Booking extends BaseController
             $data['roles'] = $this->rm->getAllRoles();
             $data['suppliers'] = $this->sm->get_suppliers_only();
 
-            $this->loadViews("booking/list", $this->global, $data, NULL);
+
+            if(!$this->isAdmin()){
+                $this->loadViews("booking/list-roles", $this->global, $data, NULL);
+            }else{
+                $this->loadViews("booking/list", $this->global, $data, NULL);
+            }
         }
     }
 
@@ -402,10 +407,10 @@ class Booking extends BaseController
             $this->form_validation->set_rules('cName', 'Customer Name', 'trim|callback_html_clean|required');
             $this->form_validation->set_rules('cEmail', 'Customer Email', 'trim|callback_html_clean|required|max_length[1024]');
             $this->form_validation->set_rules('cPh', 'Customer Phone', 'trim|callback_html_clean|required|max_length[1024]');
-            $this->form_validation->set_rules('puTime', 'Pickup Time', 'trim|callback_html_clean|required|max_length[1024]');
-            $this->form_validation->set_rules('puDate', 'Pickup Date', 'trim|callback_html_clean|required|max_length[1024]');
-            $this->form_validation->set_rules('puLoc', 'Pickup Location', 'trim|callback_html_clean|required|max_length[1024]');
-            $this->form_validation->set_rules('drpLoc', 'Drop Location', 'trim|callback_html_clean|required|max_length[1024]');
+            // $this->form_validation->set_rules('puTime', 'Pickup Time', 'trim|callback_html_clean|required|max_length[1024]');
+             $this->form_validation->set_rules('puDate', 'Pickup Date', 'trim|callback_html_clean|required|max_length[1024]');
+            // $this->form_validation->set_rules('puLoc', 'Pickup Location', 'trim|callback_html_clean|required|max_length[1024]');
+            // $this->form_validation->set_rules('drpLoc', 'Drop Location', 'trim|callback_html_clean|required|max_length[1024]');
             $this->form_validation->set_rules('noOfPerson', 'No Of Person', 'trim|callback_html_clean|required|max_length[1024]');
             $this->form_validation->set_rules('description', 'description', 'trim|callback_html_clean|required|max_length[1024]');
             $this->form_validation->set_rules('totalPriceInput', 'Total Price', 'trim|callback_html_clean|required|max_length[1024]');
@@ -424,6 +429,10 @@ class Booking extends BaseController
                     'cutomerEmail' => ($this->input->post('cEmail')),
                     'slotNo' => ($this->input->post('slot_no')),
                     'payMethod' => ($this->input->post('pay_method')),
+                    'flight_no' => $this->input->post('flight_no') ?? '',
+                    'ad_time' => $this->input->post('ad_time') ?? '',
+                    'baby_seats' =>json_encode($_POST['babySeat_qty'] ?? []),
+                    'driver_notes' =>$_POST['sp_note'] ?? '',
                 );
                 
 
@@ -444,8 +453,8 @@ class Booking extends BaseController
 
                 $data['bRefNo'] =  $uniqueRefNo;
                 $data['serviceId'] =  $id;
-                $data['bStaff'] =  $this->security->xss_clean($this->input->post('staff'));
-                $data['bAgent'] = $this->security->xss_clean($this->input->post('agent'));
+                $data['bStaff'] =  array_key_exists('name',$_SESSION) ? $_SESSION['name'] :  "Online";
+                $data['bAgent'] =  array_key_exists('roleText',$_SESSION) ? $_SESSION['roleText'] :  "COMPANY";
                 $data['bDate'] = $bookingDate;
                 $data['bGuestName'] = $this->security->xss_clean($this->input->post('cName'));
                 $data['bGuestContact'] = $this->security->xss_clean($this->input->post('cPh'));
@@ -564,8 +573,8 @@ class Booking extends BaseController
 
             $data['bRefNo'] =  $uniqueRefNo;
             $data['serviceId'] =  $this->security->xss_clean($this->input->post('sid') ?? '');
-            $data['bStaff'] =  $this->security->xss_clean($this->input->post('staff') ?? '');
-            $data['bAgent'] = $this->security->xss_clean($this->input->post('agent') ?? '');
+            $data['bStaff'] =  array_key_exists('name',$_SESSION) ? $_SESSION['name'] :  "Online";
+            $data['bAgent'] =  array_key_exists('roleText',$_SESSION) ? $_SESSION['roleText'] :  "COMPANY";
             $data['bDate'] = $bookingDate ?? '';
             $data['bGuestName'] = $this->security->xss_clean($this->input->post('cName') ?? '');
             $data['bGuestContact'] = $this->security->xss_clean($this->input->post('cPh') ?? '');
